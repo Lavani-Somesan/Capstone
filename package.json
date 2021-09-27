@@ -1,0 +1,25 @@
+{
+  "name": "capstone",
+  "version": "1.0.0",
+  "description": "A game store web app to sell merch",
+  "main": "main.js",
+  "dependencies": {
+    "cities": "^2.0.0",
+    "http-status-codes": "^2.1.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm start",
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lavani-Somesan/Capstone.git"
+  },
+  "author": "lks17",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lavani-Somesan/Capstone/issues"
+  },
+  "homepage": "https://github.com/Lavani-Somesan/Capstone#readme"
+}
