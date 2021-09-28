@@ -2,15 +2,18 @@
   "name": "capstone",
   "version": "1.0.0",
   "description": "A game store web app to sell merch",
-  "main": "main.js",
+  "main": "server.js",
   "dependencies": {
     "cities": "^2.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.1",
     "http-status-codes": "^2.1.4"
   },
   "devDependencies": {},
   "scripts": {
     "test": "npm start",
-    "start": "node main.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",

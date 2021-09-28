@@ -1,16 +1,21 @@
-const port = 3000,
-    http = require("http"),
-    httpStatus = require("http-status-codes"),
-    app = http.createServer((request, response) => {
-        console.log("Received an incoming request!");
-        response.writeHead(httpStatus.OK, {
-            "Context-Type": "text/html"
-        });
-    let responseMessage = "<h1>Hello, Universe!</h1>";
-    response.write(responseMessage);
-    response.end();
-    console.log(`Sent a response : ${responseMessage}`);
-    });
+const path = require('path');
+const router = require("./router");
+const port = 8050;
 
-    app.listen(port);
-    console.log(`The server has started and is listening on port number: ${port}`);
+express = require("express");
+layouts = require("express-ejs-layouts");
+
+app = express()
+
+app.set('views', path.join(__dirname, 'views'));
+app.use('/', express.static(__dirname + '/public'));
+
+app.set("view engine", "ejs");
+app.use(layouts);
+
+app.use(router);
+
+app.listen(port, () => {
+    console.log(`The Server is listening on port number: ${port}`);
+})
+    
