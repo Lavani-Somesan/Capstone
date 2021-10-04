@@ -6,5 +6,6 @@ pageController = require("./Controllers/pageController");
 router.get("/", pageController.getHomePage);
 router.get("/home", pageController.getHomePage);
 router.get("/login", pageController.getLoginPage);
+router.get("/accountCreation", pageController.getAccountCreation);
 
 module.exports = router;
