@@ -1,5 +1,5 @@
 const router = require("express").Router(),
-pageController = require("../Controllers/pageController");
+pageController = require("../controllers/pageController");
 
 //Page Routes
 router.get("/", pageController.getHomePage);

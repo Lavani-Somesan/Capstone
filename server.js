@@ -1,5 +1,5 @@
 const path = require('path');
-const router = require("./Router/main");
+const router = require("./router/main");
 let bodyparser = require('body-parser');
 const port = 8050;
 
