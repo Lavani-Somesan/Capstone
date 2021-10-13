@@ -1,0 +1,30 @@
+nav {
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+nav ul {
+    display: flex;
+    background-color: black;
+}
+
+nav .navBar__link {
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+    color: white;
+    padding: 16px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: normal;
+}
+
+.navBar__list {
+    list-style: none;
+    margin: 0 3px;
+    font-size: 3vh;
+    cursor: pointer;
+}
+
+.navBar__listContainer:hover {
+    background-color: rgb(137, 195, 230);
+}
