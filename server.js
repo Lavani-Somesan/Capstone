@@ -1,12 +1,15 @@
+const port = 8050;
 const path = require('path');
 const router = require("./router/main");
-let bodyparser = require('body-parser');
-const port = 8050;
 
+let bodyParser = require('body-parser');
 express = require("express");
 layouts = require("express-ejs-layouts");
 
-app = express()
+app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('views', path.join(__dirname, 'views'));
 app.use('/', express.static(__dirname + '/public'));
