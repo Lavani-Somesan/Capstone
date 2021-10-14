@@ -3,6 +3,8 @@ Creating a Game Store Web Application
 
 Run Application
 
+*Remember to do a "npm install" whenever you do a git pull
+
 To run this application you need to do use 3 vscode terminals:
 
 1.) In one terminal do a npm start
