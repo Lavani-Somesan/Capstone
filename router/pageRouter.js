@@ -1,11 +1,11 @@
 const router = require("express").Router(),
-pageController = require("../Controllers/pageController");
+pageController = require("../controllers/pageController");
 
 //Page Routes
 router.get("/", pageController.getHomePage);
 router.get("/home", pageController.getHomePage);
 router.get("/login", pageController.getLoginPage);
-router.get("/account-creation", pageController.getAccountCreationPage);
+router.get("/create-account", pageController.getAccountCreationPage);
 
 module.exports = router;
 
