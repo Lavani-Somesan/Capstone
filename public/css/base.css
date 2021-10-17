@@ -1,10 +1,8 @@
-* {
-    margin: 0;
-}
+
 
 body {
     text-align: center;
-    background: linear-gradient(to left, #205ccc, #e0e092);
+    background: linear-gradient(to left, #4882ee, #7e28a0);
 }
 
 .pageTitle {
