@@ -1,0 +1,74 @@
+.guide__header {
+    color: white;
+    font-size: 36px;
+    font-family: '', monospace;
+
+}
+
+.accountGuide {
+    display: inline-block;
+    margin-top: 3rem;
+    width: 600px;
+    height: 300px;
+    border-radius: 5px;
+    padding: 16px;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.guide__text_1{
+    text-align: center;
+    margin-bottom: 1rem;
+
+}
+
+.guide__text_2 {
+    text-align: center;
+    margin-bottom: 2.5rem;
+
+}
+
+.account__container {
+    display: flex;
+    margin-right: 3rem;
+    
+    
+}
+
+.guide__label {
+
+}
+
+.account__button__container {
+    display: flex;
+}
+
+.login__button {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width: 250px;
+    padding: 10px;
+    border: 1px solid black;
+    background-color: rgb(53, 141, 199);
+    border-radius: 18px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+
+}
+
+.create__button {
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+    width: 250px;
+    padding: 10px;
+    border: 1px solid black;
+    background-color: rgb(116, 41, 185);
+    border-radius: 18px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+
+}

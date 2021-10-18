@@ -12,3 +12,8 @@ exports.getAccountCreationPage = (req, res) => {
     
     res.render("accountCreation");
 }
+
+exports.getAccountGuidePage = (req, res) => {
+    
+    res.render("accountGuide");
+}
