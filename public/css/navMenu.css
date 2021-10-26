@@ -1,3 +1,31 @@
+* {
+    margin: 0;
+}
+
+.logo {
+    font-size: 36px;
+    font-family: '', monospace;
+    color: white;
+    margin-top: 0.5rem;
+}
+
+#X {
+    font-size: 44px;
+    margin-top: 0.3rem;
+
+}
+
+.logoContainer {
+    position: relative;
+    display: flex;
+    justify-content: left;
+    
+    margin-bottom: 0.5rem;
+    margin-left: 2rem;
+    margin-right: 5rem;
+    min-width: 500px;
+}
+
 nav {
     width: 100%;
     margin-bottom: 2rem;
