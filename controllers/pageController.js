@@ -17,3 +17,18 @@ exports.getAccountGuidePage = (req, res) => {
     
     res.render("accountGuide");
 }
+
+exports.getMerchandisePage = (req, res) => {
+    
+    res.render("merchandise");
+}
+
+exports.getGamesPage = (req, res) => {
+    
+    res.render("games");
+}
+
+exports.getNewsFeedPage = (req, res) => {
+    
+    res.render("newsfeed");
+}
