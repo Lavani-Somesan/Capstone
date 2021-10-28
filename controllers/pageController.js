@@ -17,3 +17,8 @@ exports.getAccountGuidePage = (req, res) => {
     
     res.render("accountGuide");
 }
+
+exports.getAboutPage = (req, res) => {
+    res.render("about");
+
+}
