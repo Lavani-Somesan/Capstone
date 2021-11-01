@@ -16,8 +16,16 @@ exports.createUser = (req, res) => {
     
     api.post(endPoint, req.body).then(resp => {
         
-        if(resp.data.responseID != null && resp.data.report != null) {
+        if(resp.data.responseID != null && !resp.data.report.includes("Error")) {
             console.log(`Success, Response ID: ${resp.data.responseID}`);
+        } else {
+            console.log(`Error, Response ID:  ${resp.data.responseID}`);
+        }
+
+        if(!resp.data.report.includes("Error")) {
+            res.redirect("/login");
+        } else {
+            res.redirect("/account-creation");
         }
     })
     .catch(error => {
@@ -25,9 +33,8 @@ exports.createUser = (req, res) => {
         res.redirect("/create-account");
     });
 
-    res.redirect("/login");
+    
 };
-
 
 
 exports.authentication = (req, res) => {

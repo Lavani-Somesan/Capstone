@@ -34,7 +34,7 @@ exports.createUser = async function(req, res, next) {
                     responseID: randID,
                     report: "Error, Unsuccessful Creation of User"
                 }
-                return res.json(payload);
+            res.json(payload);
         });
 };
 
