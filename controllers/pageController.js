@@ -21,4 +21,19 @@ exports.getAccountGuidePage = (req, res) => {
 exports.getAboutPage = (req, res) => {
     res.render("about");
 
+
+exports.getMerchandisePage = (req, res) => {
+    
+    res.render("merchandise");
+}
+
+exports.getGamesPage = (req, res) => {
+    
+    res.render("games");
+}
+
+exports.getNewsFeedPage = (req, res) => {
+    
+    res.render("newsfeed");
+
 }

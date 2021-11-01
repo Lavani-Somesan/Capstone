@@ -3,29 +3,35 @@
     <head>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="css/createAcnt.css">
+        <title>StationX Create Account</title>
 
     </head>
 
     <body>
         
         <div class="createAcnt">
-            <h1 class="createAcnt__header">Create Account</h1>
+            <h1 class="createAcnt__header">Create StationX Account</h1>
 
             <form class="createAcnt__form" action="/user/create-account" method="POST">
                 <label class="createAcnt__label" for="firstName">First Name:</label>
-                <input class="createAcnt__input" type="text" id="firstname" name="firstname" required><br><br>
+                <input class="createAcnt__input" type="text" id="firstname" name="firstname" 
+                    minlength="2" maxlength="50" required placeholder="First Name"><br><br>
 
                 <label class="createAcnt__label" for="lastName">Last Name:</label>
-                <input class="createAcnt__input" type="text" id="lastname" name="lastname" required><br><br>
+                <input class="createAcnt__input" type="text" id="lastname" name="lastname" 
+                    minlength="2" maxlength="50" required placeholder="Last Name"><br><br>
 
-                <label class="createAcnt__label" for="email">Email:</label>
-                <input class="createAcnt__input" type="text" id="email" name="email" required><br><br>
+                <label class="createAcnt__label__email" for="email">Email: </label>
+                <input class="createAcnt__input" type="text" id="email" name="email" 
+                    maxlength="70" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required placeholder="Email-Address"><br><br>
 
                 <label class="createAcnt__label" for="username">Username:</label>
-                <input class="createAcnt__input" type="text" id="username" name="username" required><br><br>
+                <input class="createAcnt__input" type="text" id="username" name="username" 
+                    minlength="2" maxlength="12" required placeholder="2 to 12 Characters Long"><br><br>
 
                 <label class="createAcnt__label" for="password">Password:</label>
-                <input class="createAcnt__input" type="text" id="password" name="password" required><br><br>
+                <input class="createAcnt__input" type="password" id="password" name="password" 
+                    minlength="8" maxlength="30" required placeholder="8 to 30 Characters Long"><br><br>
 
                 <button class="createAcnt__button" type="submit">Sign Up</button>
             </form>

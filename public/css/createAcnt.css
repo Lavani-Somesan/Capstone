@@ -1,7 +1,7 @@
 .createAcnt {
     display: inline-block;
     margin-top: 3rem;
-    width: 500px;
+    width: 800px;
     height: 500px;
     border-radius: 5px;
     padding: 16px;
@@ -13,16 +13,29 @@
     color: black;
     font-family: '', monospace;
     font-size: 36px;
-    margin-bottom: 0.5rem;
+    margin-bottom: 3rem;
 }
 
 
 .createAcnt__label {
-    font-size: 16px;
+    font-size: 18px;
     float: left;
     font-weight: normal;
-    margin-left: 1.3rem;
-    margin-bottom: 0.3rem;
+    margin-left: 9rem;
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+   
+}
+
+.createAcnt__label__email {
+    font-size: 18px;
+    float: left;
+    font-weight: normal;
+    margin-left: 9rem;
+    margin-top: 0.5rem;
+    margin-right: 3rem;
+    margin-bottom: 2rem;
+   
 }
 
 .createAcnt__input {
@@ -30,10 +43,10 @@
     text-align: left;
     text-indent: 1rem;
     width: 350px;
-    height: 40px;
+    height: 35px;
     border: 3px solid rgb(204, 201, 201);
     border-radius: 15px;
-    margin-left: 1rem;
+    margin-right: 8rem;
     outline: none !important;
 }
 
@@ -42,7 +55,7 @@
 }
 
 .createAcnt__button {
-    margin-top: 1rem;
+    margin-top: 3rem;
     margin-bottom: 1rem;
     width: 250px;
     padding: 10px;
@@ -59,8 +72,8 @@
     font-size: 16px;
   }
 
-  .create__button {
-    margin-top: 1rem;
+  .createAcnt__button {
+    float: center;
     margin-bottom: 3rem;
     width: 250px;
     padding: 10px;
