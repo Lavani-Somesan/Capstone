@@ -37,3 +37,48 @@ exports.createUser = async function(req, res, next) {
                 return res.json(payload);
         });
 };
+
+
+exports.authenticate = function(req, res) {
+
+    if(req != null){
+        console.log("User Service", req.path, "request", "Success, request successful", req.params.requestID);
+    } else{
+        console.log("User Service", req.path, "request", "Error, request not found", req.params.requestID);  
+    }
+
+    User.findOne({ username: req.body.username })
+        .then(user => {
+            let randomID = Math.floor((Math.random() * 100000) + 10000);
+
+            if (user && user.password === req.body.password) {
+                console.log("Successful in logging in");
+                let payload = {
+                    user: user,
+                    responseID: randomID,
+                    report: "Successful in logging in"
+                };
+                return res.json(payload);
+            } 
+            else {
+                console.log("Unsuccessful in Logging in, No User Found");
+                user = 0;
+                let payload = {
+                    user: user,
+                    responseID: randomID,
+                    report: "Error, Unsuccessful in Logging in"
+                }
+                return res.json(payload);
+            }
+        })
+        .catch(error => {
+            user = 0;
+            let payload = {
+                user: user,
+                responseID: randomID,
+                report: "Error, Unsuccessful in Logging in"
+            }
+            console.log(`Error doing authentication: ${error.message}`);
+            return res.json(payload);
+        });
+};

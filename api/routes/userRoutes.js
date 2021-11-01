@@ -22,5 +22,20 @@ router.post('/user/create-account/:requestID', (req, res) => {
 });
 
 
+router.post('/user/authentication/:requestID', (req, res) => {
+    let endPoint = req.path;
+
+    console.log("\nPassing through API Endpoint");
+
+    api.post(endPoint, req.body).then(resp => {
+            console.log("Passing back through API Endpoint");
+            res.json(resp.data);
+        })
+        .catch(error => {
+            console.log(`Request Failed: ${error.message}`);
+        });
+});
+
+
 
 module.exports = router;
