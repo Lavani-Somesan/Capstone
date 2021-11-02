@@ -24,8 +24,10 @@ exports.createUser = (req, res) => {
         }
 
         if(!resp.data.report.includes("Error")) {
+            req.flash("success", "Success in Creating Account!")
             res.redirect("/login");
         } else {
+            req.flash("error", "Error in Creating Account");
             res.redirect("/account-creation");
         }
     })
@@ -74,5 +76,24 @@ exports.authentication = (req, res) => {
 
 
 exports.logout = (req, res) => {
+    if (!req.session.user_ApiToken) {
+        req.flash("error", "Not Logged In");
+        res.redirect("/login");
+    } else {
+        //Destroys the user session
+        req.session.destroy(error => {
+            if (error) {
+                console.log(`Could not Log Out: ${error.message}`);
+                res.redirect("/home");
+            } else {
+                console.log("Logged out Successfully!\n")
+                res.clearCookie('sid');
+                res.redirect("/login");
+            }
+        });
+    }
+};
+
+exports.changeToken = (req, res) => {
 
 };
