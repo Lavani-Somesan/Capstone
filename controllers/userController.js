@@ -55,15 +55,24 @@ exports.authentication = (req, res) => {
         if (Object.keys(userObj).length > 0) {
             req.session.user_ApiToken = userObj.apiToken; //Starts session
             req.session.user_ID = resp.data._id; 
+
+            req.flash("success", "Logged In Successfully!")
             res.redirect("/home");
         }
         else {
             console.log("User Not Found, Error Logging in\n");
+            req.flash("error", "Failed to Log In");
             res.redirect("/login"); 
         }   
     })
     .catch(err => {
         console.log("Error Logging in\n");
+        req.flash("error", "Failed to Log In");
         res.redirect("/login");
     })
+};
+
+
+exports.logout = (req, res) => {
+
 };

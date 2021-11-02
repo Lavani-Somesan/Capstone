@@ -3,7 +3,8 @@ const path = require('path');
 const router = require("./router/main");
 
 const expressSession = require("express-session"),
-    cookieParser = require("cookie-parser");
+    cookieParser = require("cookie-parser"),
+    connectFlash = require("connect-flash");
 
 let bodyParser = require('body-parser');
 express = require("express");
@@ -28,6 +29,14 @@ app.use(expressSession({
         sameSite: true  //strict
     },
 }));
+
+
+//Connecting Flash Messaging 
+app.use(connectFlash());
+app.use((req, res, next) => {
+    res.locals.flashMessages = req.flash();
+    next();
+});
 
 
 app.set('views', path.join(__dirname, 'views'));
