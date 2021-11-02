@@ -3,6 +3,7 @@ const apiAdapter = require('../api/apiAdapter');
 const API_URL = 'http://localhost:2000';
 const api = apiAdapter(API_URL);
 
+const { session } = require('passport');
 const { data } = require('jquery');
 const express = require('express');
 
@@ -50,13 +51,16 @@ exports.authentication = (req, res) => {
         if(resp.data.responseID != null && resp.data.report != null){
             console.log("User Service", req.path, "response", resp.data.report, resp.data.responseID); 
         } 
-        if(userObj == 0) {
-            console.log("Login Unsucessful\n");
-            res.redirect("/login");
-        } else {
-            console.log("Login Success\n");
+
+        if (Object.keys(userObj).length > 0) {
+            req.session.user_ApiToken = userObj.apiToken; //Starts session
+            req.session.user_ID = resp.data._id; 
             res.redirect("/home");
         }
+        else {
+            console.log("User Not Found, Error Logging in\n");
+            res.redirect("/login"); 
+        }   
     })
     .catch(err => {
         console.log("Error Logging in\n");

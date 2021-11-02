@@ -42,9 +42,9 @@ exports.createUser = async function(req, res, next) {
 exports.authenticate = function(req, res) {
 
     if(req != null){
-        console.log("User Service", req.path, "request", "Success, request successful", req.params.requestID);
+        console.log("User Service", req.path, "request", "Success, request successful", req.params.requestID, "\n");
     } else{
-        console.log("User Service", req.path, "request", "Error, request not found", req.params.requestID);  
+        console.log("User Service", req.path, "request", "Error, request not found", req.params.requestID, "\n");  
     }
 
     User.findOne({ username: req.body.username })
@@ -52,7 +52,7 @@ exports.authenticate = function(req, res) {
             let randomID = Math.floor((Math.random() * 100000) + 10000);
 
             if (user && user.password === req.body.password) {
-                console.log("Successful in logging in");
+                console.log("Successful in logging in\n");
                 let payload = {
                     user: user,
                     responseID: randomID,
@@ -61,7 +61,7 @@ exports.authenticate = function(req, res) {
                 return res.json(payload);
             } 
             else {
-                console.log("Unsuccessful in Logging in, No User Found");
+                console.log("Unsuccessful in Logging in, No User Found\n");
                 user = 0;
                 let payload = {
                     user: user,
@@ -78,7 +78,7 @@ exports.authenticate = function(req, res) {
                 responseID: randomID,
                 report: "Error, Unsuccessful in Logging in"
             }
-            console.log(`Error doing authentication: ${error.message}`);
+            console.log(`Error doing authentication: ${error.message}\n`);
             return res.json(payload);
         });
 };
