@@ -1,5 +1,6 @@
 const e = require('express');
 const { json } = require('body-parser');
+const randToken = require('rand-token');
 
 let mongoose = require('mongoose'),
     User = mongoose.model('Users');
@@ -81,4 +82,42 @@ exports.authenticate = function(req, res) {
             console.log(`Error doing authentication: ${error.message}\n`);
             return res.json(payload);
         });
+};
+
+
+exports.update_ApiToken = function(req, res) {
+
+    User.findOneAndUpdate({ apiToken: req.params.token },{apiToken: randToken.generate(16)})
+    .then(user => {
+
+        user.save();
+
+        let randomID = Math.floor((Math.random() * 100000) + 10000);
+
+        if (user)  {
+            console.log("Successfully Updated Token\n");
+            let payload = {
+                responseID: randomID,
+                report: "Successfully Updated Token"
+            };
+            res.json(payload);
+        }
+        else {
+            console.log("Unsuccessful in Changing Token\n");
+            let payload = {
+                responseID: randomID,
+                report: "Error, Unsuccessful in Getting Profile Info"
+            }
+            return res.json(payload);
+        }
+    })
+    .catch(error => {
+        console.log(`Cannot Connect to Database: ${error.message}`);
+            let payload = {
+                responseID: randomID,
+                report: "Error, Unsuccessful in Connecting To  Database"
+            }
+            res.json(payload);
+    });
+
 };

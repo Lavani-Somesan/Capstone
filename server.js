@@ -18,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //Creating Session
 app.use(cookieParser("secret__password"));
+
 app.use(expressSession({
     name: 'sid',
     secret: 'secret__password',
@@ -26,7 +27,7 @@ app.use(expressSession({
     
     cookie: {
         maxAge: 4000000,
-        sameSite: true  //strict
+        sameSite: true  //Strict, means that cookie will only be attached to req from same site.
     },
 }));
 

@@ -80,6 +80,9 @@ exports.logout = (req, res) => {
         req.flash("error", "Not Logged In");
         res.redirect("/login");
     } else {
+        //Change API Token
+        this.update_ApiToken(req, res);
+
         //Destroys the user session
         req.session.destroy(error => {
             if (error) {
@@ -94,6 +97,21 @@ exports.logout = (req, res) => {
     }
 };
 
-exports.changeToken = (req, res) => {
+exports.update_ApiToken = (req, res) => {
 
+    let endPoint = API_URL + `/apiToken/${req.session.user_ApiToken}`;
+    
+    console.log("Posting to API\n");
+    
+    api.get(endPoint).then(resp => {
+        
+        if(resp.data.responseID != null && !resp.data.report.includes("Error")) {
+            console.log(`Success, Response ID: ${resp.data.responseID}`);
+        } else {
+            console.log(`Error, Response ID:  ${resp.data.responseID}`);
+        }
+    })
+    .catch(error => {
+        console.log(`Request Failed: ${error.message}`);
+    });
 };

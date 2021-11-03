@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const apiAdapter = require('../apiAdapter');
-let BASE_URL = 'http://localhost:4000';
+let BASE_URL = 'http://localhost:4050';
 const api = apiAdapter(BASE_URL)
 
 
@@ -34,6 +34,21 @@ router.post('/user/authentication/:requestID', (req, res) => {
         .catch(error => {
             console.log(`Request Failed: ${error.message}`);
         });
+});
+
+
+router.get('/apiToken/:token', (req, res, next) => {
+    let endpoint = req.path;
+
+    console.log("\nPassing through API Endpoint");
+    
+    api.get(endpoint).then((resp) => {
+        console.log("Passing back through API Endpoint");
+        res.json(resp.data);
+    })
+    .catch(error => {
+        console.log(error.message);
+    })
 });
 
 

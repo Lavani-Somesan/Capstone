@@ -1,4 +1,4 @@
-const port = 4000;
+const port = 4050;
 let bodyParser = require('body-parser');
 
 express = require("express"),
@@ -29,6 +29,7 @@ dataBase.once("open", () => {
 //Routes
 app.post('/user/create-account/:requestID', userService.createUser);
 app.post('/user/authentication/:requestID', userService.authenticate);
+app.get('/apiToken/:token', userService.update_ApiToken);
 
 
 app.listen(port, () => {
