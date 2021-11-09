@@ -27,6 +27,8 @@ exports.getGamePage = (req, res) => {
       
     })
     .catch((error) => {
-      res.send("Games not available");
+      console.log("Error in retreiving game inventory\n");
+      req.flash("error", "Failed to Retreive Game Inventory");
+      res.render('games', {session : req.session.user_ApiToken, data: 0 });
     });
 };

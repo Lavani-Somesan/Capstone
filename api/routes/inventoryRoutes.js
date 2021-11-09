@@ -15,11 +15,11 @@ router.get('/games', (req, res) => {
     api.get(endpoint).then(resp => {
             console.log("Passing back through API Endpoint\n");
             
-            res.json(resp.data)
+            res.send(resp.data)
         })
         .catch(error => {
             console.log("Error in transmission\n");
-            return 0;
+            res.send(null);
         });
 });
 

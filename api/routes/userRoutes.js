@@ -17,7 +17,8 @@ router.post('/user/create-account/:requestID', (req, res) => {
             res.json(resp.data);
         })
         .catch(error => {
-            console.log(`Request Failed: ${error.message}`);
+            console.log(`Request Failed: ${error.message}\n`);
+            res.send(null);
         });
 });
 
@@ -32,7 +33,8 @@ router.post('/user/authentication/:requestID', (req, res) => {
             res.json(resp.data);
         })
         .catch(error => {
-            console.log(`Request Failed: ${error.message}`);
+            console.log(`Request Failed: ${error.message}\n`);
+            res.send(null);
         });
 });
 
@@ -48,6 +50,7 @@ router.get('/apiToken/:token', (req, res, next) => {
     })
     .catch(error => {
         console.log(error.message);
+        res.send(null);
     })
 });
 

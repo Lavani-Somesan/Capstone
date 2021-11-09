@@ -38,11 +38,21 @@
                 </li>
             </div>
 
+            <% if (!session) { %>
             <div class=" navBar__listContainer ">
                 <li class=" navBar__list ">
                     <a class=" navBar__link" href=" /account-guide "> LogIn / Sign Up </a>
                 </li>
             </div>
+            <% } %>
+
+            <% if (session) { %>
+                <div class=" navBar__listContainer ">
+                    <li class=" navBar__list ">
+                        <a class=" navBar__link" href=" /user/account "> Account </a>
+                    </li>
+                </div>
+                <% } %>
 
             <% if (session) { %>
             <div class=" navBar__listContainer ">
