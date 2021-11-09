@@ -1,0 +1,68 @@
+.inventory {
+    display: flexbox;
+}
+
+.inventory .inv__pageTitle {
+    text-decoration: none;
+}
+
+.inv__column {
+    float: left;
+    width: 25%;
+    padding: 0 10px;
+    margin-left: 3rem;
+}
+
+.inv__row {
+    margin: 5rem;
+}
+
+.inv__card {
+    padding: 16px;
+    background-color: white;
+    width: 290px;
+    height: 430px;
+    margin: 2rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    font-size: 15px;
+    transition: 0.3s;
+    cursor: default;
+}
+
+.inv__card:hover {
+    box-shadow: 0 8px 25px 0 rgba(0, 0, 0, 0.4);
+}
+
+.inv__sectionContent {
+    margin-bottom: 0.5rem;
+    font-size: 18px;
+}
+
+.inv__image {
+    width: 220px;
+    height: 220px;
+    margin-bottom: 3rem;
+}
+
+@media screen and (max-width: 700px) {
+    .inv__column {
+        width: 100%;
+        display: block;
+        margin-bottom: 20px;
+    }
+}
+
+.inv__addButton {
+    display: inline-block;
+    margin-top: 1rem;
+    position: relative;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    width: 100px;
+    height: 25px;
+    border-radius: 15px;
+    border: 1px solid black;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+}

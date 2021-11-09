@@ -1,12 +1,12 @@
-const port = 4000;
+const port = 5000;
 let bodyParser = require('body-parser');
 
 express = require("express"),
     mongoose = require('mongoose'),
-    User = require('./models/userModel');
+    Inventory = require('./models/inventoryModel');
 
-//This snippet of code needs to be directly under User = require() for it to work
-let userService = require("./userService");
+//This snippet of code needs to be directly under Inventory = require() for it to work
+let inventoryService = require("./inventoryService");
 
 let app = express();
 
@@ -27,11 +27,9 @@ dataBase.once("open", () => {
 
 
 //Routes
-app.post('/user/create-account/:requestID', userService.createUser);
-app.post('/user/authentication/:requestID', userService.authenticate);
-app.get('/apiToken/:token', userService.update_ApiToken);
+app.get('/games', inventoryService.getGames);
 
 
 app.listen(port, () => {
-    console.log(`User Service is Listening on localhost:${port}`);
+    console.log(`Inventory Service is Listening on localhost:${port}`);
 });
