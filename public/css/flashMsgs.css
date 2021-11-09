@@ -1,0 +1,15 @@
+.flash__success {
+    padding: 16px;
+    background-color: rgb(10, 199, 10);
+    width: 100%;
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+
+.flash__error {
+    padding: 16px;
+    background-color: rgb(235, 48, 57);
+    width: 100%;
+    font-weight: bold;
+    margin-bottom: 2rem;
+}

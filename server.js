@@ -1,6 +1,10 @@
-const port = 8050;
+const port = 8000;
 const path = require('path');
 const router = require("./router/main");
+
+const expressSession = require("express-session"),
+    cookieParser = require("cookie-parser"),
+    connectFlash = require("connect-flash");
 
 let bodyParser = require('body-parser');
 express = require("express");
@@ -10,6 +14,31 @@ app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+
+//Creating Session
+app.use(cookieParser("secret__password"));
+
+app.use(expressSession({
+    name: 'sid',
+    secret: 'secret__password',
+    resave: false,
+    saveUninitialized: false,
+    
+    cookie: {
+        maxAge: 4000000,
+        sameSite: true  //Strict, means that cookie will only be attached to req from same site.
+    },
+}));
+
+
+//Connecting Flash Messaging 
+app.use(connectFlash());
+app.use((req, res, next) => {
+    res.locals.flashMessages = req.flash();
+    next();
+});
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.use('/', express.static(__dirname + '/public'));

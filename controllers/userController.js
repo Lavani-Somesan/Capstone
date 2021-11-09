@@ -3,6 +3,7 @@ const apiAdapter = require('../api/apiAdapter');
 const API_URL = 'http://localhost:2000';
 const api = apiAdapter(API_URL);
 
+const { session } = require('passport');
 const { data } = require('jquery');
 const express = require('express');
 
@@ -16,8 +17,18 @@ exports.createUser = (req, res) => {
     
     api.post(endPoint, req.body).then(resp => {
         
-        if(resp.data.responseID != null && resp.data.report != null) {
+        if(resp.data.responseID != null && !resp.data.report.includes("Error")) {
             console.log(`Success, Response ID: ${resp.data.responseID}`);
+        } else {
+            console.log(`Error, Response ID:  ${resp.data.responseID}`);
+        }
+
+        if(!resp.data.report.includes("Error")) {
+            req.flash("success", "Success in Creating Account!")
+            res.redirect("/login");
+        } else {
+            req.flash("error", "Error in Creating Account");
+            res.redirect("/account-creation");
         }
     })
     .catch(error => {
@@ -25,9 +36,8 @@ exports.createUser = (req, res) => {
         res.redirect("/create-account");
     });
 
-    res.redirect("/login");
+    
 };
-
 
 
 exports.authentication = (req, res) => {
@@ -43,16 +53,65 @@ exports.authentication = (req, res) => {
         if(resp.data.responseID != null && resp.data.report != null){
             console.log("User Service", req.path, "response", resp.data.report, resp.data.responseID); 
         } 
-        if(userObj == 0) {
-            console.log("Login Unsucessful\n");
-            res.redirect("/login");
-        } else {
-            console.log("Login Success\n");
+
+        if (Object.keys(userObj).length > 0) {
+            req.session.user_ApiToken = userObj.apiToken; //Starts session
+            req.session.user_ID = resp.data._id; 
+
+            req.flash("success", "Logged In Successfully!")
             res.redirect("/home");
         }
+        else {
+            console.log("User Not Found, Error Logging in\n");
+            req.flash("error", "Failed to Log In");
+            res.redirect("/login"); 
+        }   
     })
     .catch(err => {
         console.log("Error Logging in\n");
+        req.flash("error", "Failed to Log In");
         res.redirect("/login");
     })
+};
+
+
+exports.logout = (req, res) => {
+    if (!req.session.user_ApiToken) {
+        req.flash("error", "Not Logged In");
+        res.redirect("/login");
+    } else {
+        //Change API Token
+        this.update_ApiToken(req, res);
+
+        //Destroys the user session
+        req.session.destroy(error => {
+            if (error) {
+                console.log(`Could not Log Out: ${error.message}`);
+                res.redirect("/home");
+            } else {
+                console.log("Logged out Successfully!\n")
+                res.clearCookie('sid');
+                res.redirect("/login");
+            }
+        });
+    }
+};
+
+exports.update_ApiToken = (req, res) => {
+
+    let endPoint = API_URL + `/apiToken/${req.session.user_ApiToken}`;
+    
+    console.log("Posting to API\n");
+    
+    api.get(endPoint).then(resp => {
+        
+        if(resp.data.responseID != null && !resp.data.report.includes("Error")) {
+            console.log(`Success, Response ID: ${resp.data.responseID}`);
+        } else {
+            console.log(`Error, Response ID:  ${resp.data.responseID}`);
+        }
+    })
+    .catch(error => {
+        console.log(`Request Failed: ${error.message}`);
+    });
 };
