@@ -7,16 +7,22 @@ Run Application
 
 *Remember to do a "npm install" whenever you do a git pull
 
-To run this application you need to do use 3 vscode terminals:
+To run this application and all the services you need to do use 4 vscode terminals:
 
-1.) In one terminal do a npm start
+1.) In one terminal do a npm start, this will start the main server
 
 2.) In the second terminal do command "cd api" and then do command "node main.js" to start API server
 
-3.) In the third terminal do command "cd userService" and then do command "node main.js" to start userService server
+3.) In the third terminal do command "cd services" followed with another command "cd userService" and then do command "node main.js" to start user Service server
 
-* All 3 must be running any database actions to work i.e. creating user, getting user, etc.
-* 
+4.) In the fourth terminal do command "cd services" followed with another command "cd inventoryService" and then do command "node main.js" to start inventory Service server
+
+*If you don't need to do anything involving the database, you don't need the api or services running
+
+*If you do any actions that require the user service i.e. creating account, logging in, logout, etc. you need to have the api and user service both running
+
+*If you do any actions that require the inventory service i.e. go to the game page, view product, etc. you need to have the api and inventory service both running
+
+*Finally, if you want the application to be running at it's fullest, the you need all 4 to be up and running. 
+
 4.) In web browser, type in "http://localhost:8050/" to access website
-
-*For creating a user, navigate to route /create-account and enter in form, and click submit. The console should give you a log of the progess of the request. You should also be able to view your created user in the MongoDB database.
