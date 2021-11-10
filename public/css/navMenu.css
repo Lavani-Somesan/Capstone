@@ -87,6 +87,11 @@ li.navBar__list.account {
     font-weight: bold;
 }
 
+
+.navBar__link:hover {
+    font-weight: bold;
+}
+
 .navBar__listContainer.search {
     margin-left: 2rem;
     margin-top: 0.5rem;
@@ -125,6 +130,7 @@ li.navBar__list.account {
     right: 1px;
     color: white;
 }
+
 
 .navBar__icon {  
     position: relative;

@@ -14,11 +14,11 @@ exports.createUser = async function(req, res, next) {
     } else{
         console.log("Error in transmission");
     }
+
     let randID = Math.floor((Math.random() * 100000) + 10000);
 
     User.create(req.body)
         .then(user => {
-            
             console.log("User added");
                 let payload = {
                     user: user,
@@ -29,11 +29,21 @@ exports.createUser = async function(req, res, next) {
         })
         .catch(error => {
             console.log(`Error Creating User: ${error.message}`);
+            var report_1 = ""
+
+            if(error.message.includes("username")) {
+                report_1 = "Error, Username is Already Taken!";
+            } 
+            else if(error.message.includes("email")) {
+                report_1 = "Error, Email is Already Taken!";
+            } else {
+                report_1 = "Error, Unsucessful Creation of User"
+            }
             user = 0;
                 let payload = {
                     user: user,
                     responseID: randID,
-                    report: "Error, Unsuccessful Creation of User"
+                    report: report_1
                 }
             res.json(payload);
         });
