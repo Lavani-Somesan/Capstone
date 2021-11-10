@@ -8,59 +8,92 @@
         <ul>
             <div class="navBar__listContainer">
                 <li class="navBar__list">
-                   
+                    <i class="material-icons navBar__icon">home</i>
                     <a class="navBar__link" href=" /home "> Home </a>
                 </li>
             </div>
             
             <div class=" navBar__listContainer ">
                 <li class=" navBar__list ">
-                    
+                    <i class=" material-icons navBar__icon ">games</i>
                     <a class=" navBar__link" href="/games"> Games </a>
                 </li>
             </div>
 
             <div class=" navBar__listContainer ">
                 <li class="navBar__list ">
+                    <i class="material-icons navBar__icon ">checkroom</i>
                     <a class="navBar__link" href="/merchandise "> Merchandise </a>
                 </li>
             </div>
 
             <div class=" navBar__listContainer ">
                 <li class=" navBar__list ">
+                    <i class=" material-icons navBar__icon ">newspaper</i>
                     <a class=" navBar__link" href=" /newsfeed "> NewsFeed </a>
                 </li>
             </div>
 
             <div class=" navBar__listContainer ">
                 <li class=" navBar__list ">
+                    <i class=" material-icons navBar__icon ">info</i>
                     <a class=" navBar__link" href=" /about "> About </a>
                 </li>
             </div>
 
-            <% if (!session) { %>
-            <div class=" navBar__listContainer ">
-                <li class=" navBar__list ">
+            <div class=" navBar__listContainer search" >
+                <div class="navBar__searchContainer">
+                    <form class="search_form" action="/search/" method="POST">
+        
+                        <input class="navBar__searchInput" type="text" placeholder="Search Games or Merch by Title" name="search" id="userSearch">
+        
+                        <button class="navBar__searchButton" type="submit">
+                            <i class="material-icons navBar__icon search">search</i>                     
+                        </button>
+                    </form>
+                </div>
+        </div>
+
+        <% if (!session) { %>
+            <div class=" navBar__listContainer account">
+                <li class=" navBar__list account">
+                    <i class=" material-icons navBar__icon ">account_circle</i>
                     <a class=" navBar__link" href=" /account-guide "> LogIn / Sign Up </a>
                 </li>
             </div>
             <% } %>
 
-            <% if (session) { %>
-                <div class=" navBar__listContainer ">
-                    <li class=" navBar__list ">
-                        <a class=" navBar__link" href=" /user/account "> Account </a>
-                    </li>
-                </div>
-                <% } %>
 
             <% if (session) { %>
-            <div class=" navBar__listContainer ">
-                <li class=" navBar__list ">
-                    <a class=" navBar__link" href=" /user/logout "> LogOut </a>
-                </li>
-            </div>
-            <% } %>
+                <div class=" navBar__listContainer account">
+                    <li class=" navBar__list account">
+                        <i class=" material-icons navBar__icon ">account_circle</i>
+                        <a class=" navBar__link "> Account </a>
+
+                        <div class=" navBar__dropdownContent ">
+                            <div class="navBar__dropdownContentGroup">
+                                <a class=" navBar__link account" href=" /user/profile "> Profile </a>
+                            </div>
+
+                            <div class="navBar__dropdownContentGroup">
+                                <a class=" navBar__link account" href=" /user/account-settings "> Settings </a>
+                            </div>
+
+                            <div class="navBar__dropdownContentGroup">
+                                <a class=" navBar__link account" href=" /user/logout "> LogOut </a>
+                            </div>
+                        </div>
+                    </li>
+                </div>
+
+                <div class=" navBar__listContainer ">
+                    <li class=" navBar__list ">
+                        <i class=" material-icons navBar__icon ">shopping_cart</i>
+                        <a class=" navBar__link" href=" /user/cart "> Cart </a>
+                    </li>
+                </div>
+
+                <% } %>
 
         </ul>
     </div>

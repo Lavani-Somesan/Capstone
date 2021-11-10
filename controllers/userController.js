@@ -27,8 +27,8 @@ exports.createUser = (req, res) => {
             req.flash("success", "Success in Creating Account!")
             res.redirect("/login");
         } else {
-            req.flash("error", "Error in Creating Account");
-            res.redirect("/account-creation");
+            req.flash("error", resp.data.report);
+            res.redirect("/create-account");
         }
     })
     .catch(error => {
