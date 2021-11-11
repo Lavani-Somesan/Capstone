@@ -28,6 +28,7 @@ dataBase.once("open", () => {
 
 //Routes
 app.get('/games', inventoryService.getGames);
+app.get('/merchandise', inventoryService.getMerch);
 
 
 app.listen(port, () => {

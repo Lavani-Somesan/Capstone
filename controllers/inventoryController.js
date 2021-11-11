@@ -8,8 +8,7 @@ const express = require('express');
 
 
 exports.getGamePage = (req, res) => {
-
-    let endPoint = API_URL + '/games';
+    let endPoint = API_URL + req.path;
     
     console.log("Posting to API\n");
     
@@ -31,4 +30,30 @@ exports.getGamePage = (req, res) => {
       req.flash("error", "Failed to Retreive Game Inventory");
       res.render('games', {session : req.session.user_ApiToken, data: 0 });
     });
+};
+
+
+exports.getMerchPage = (req, res) => {
+  let endPoint = API_URL + req.path;
+  
+  console.log("Posting to API\n");
+  
+  api.get(endPoint).then((resp) => {
+
+    const merchObj = resp.data;
+
+    if(merchObj) {
+        console.log('Success in retreiving game inventory\n');
+        res.render('merchandise', {session : req.session.user_ApiToken, data: resp.data });
+    } else {
+          console.log('Error in retreiving game inventory\n');
+          res.render('games', {session : req.session.user_ApiToken, data: resp.data });
+    }
+    
+  })
+  .catch((error) => {
+    console.log("Error in retreiving game inventory\n");
+    req.flash("error", "Failed to Retreive Game Inventory");
+    res.render('games', {session : req.session.user_ApiToken, data: 0 });
+  });
 };

@@ -13,7 +13,7 @@ router.get("/about", pageController.getAboutPage);
 router.get("/account-guide", pageController.getAccountGuidePage);
 router.get("/newsfeed", pageController.getNewsFeedPage);
 
-router.get("/merchandise", pageController.getMerchandisePage);
+router.get("/merchandise", inventoryController.getMerchPage);
 router.get("/games", inventoryController.getGamePage);
 
 router.use("/", errorRouter);

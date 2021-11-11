@@ -3,7 +3,9 @@
 }
 
 .inventory .inv__pageTitle {
-    text-decoration: none;
+    color: white;
+    font-family: '', monospace;
+    font-size: 40px;
 }
 
 .inv__column {
@@ -21,7 +23,7 @@
     padding: 16px;
     background-color: white;
     width: 290px;
-    height: 430px;
+    height: 450px;
     margin: 2rem;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     font-size: 15px;
@@ -30,7 +32,7 @@
 }
 
 .inv__card:hover {
-    box-shadow: 0 8px 25px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 12px 25px 0 black;
 }
 
 .inv__sectionContent {
@@ -40,8 +42,8 @@
 
 .inv__image {
     width: 220px;
-    height: 220px;
-    margin-bottom: 3rem;
+    height: 240px;
+    margin-bottom: 2rem;
 }
 
 @media screen and (max-width: 700px) {
@@ -65,4 +67,41 @@
     cursor: pointer;
     text-decoration: none;
     text-align: center;
+}
+
+.unavail__container {
+    display: inline-block;
+    margin-top: 3rem;
+    width: 600px;
+    height: 230px;
+    border-radius: 5px;
+    padding: 16px;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.unavail__label {
+    font-family: '', monospace;
+    margin-top: 0.5rem;
+    padding: 10px;
+    color: rgb(12, 1, 1);
+    font-size: 30px;
+    font-weight: bold;
+}
+
+
+.unavail__text1 {
+    margin-top: 1rem;
+    font-family: '', monospace;
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+    justify-content: center;
+}
+
+.unavail__text2 {
+    margin-top: 0.5rem;
+    font-family: '', monospace;
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+    justify-content: center;
 }
