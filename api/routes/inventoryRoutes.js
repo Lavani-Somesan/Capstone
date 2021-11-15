@@ -40,7 +40,7 @@ router.get('/merchandise', (req, res) => {
 });
 
 
-router.get('/search/:title', (req, res) => {
+router.get('/search/:searchParam', (req, res) => {
     let endpoint = req.path;
 
     console.log("\nPassing through API Endpoint");

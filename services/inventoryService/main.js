@@ -30,7 +30,7 @@ dataBase.once("open", () => {
 //Routes
 app.get('/games', inventoryService.getGames);
 app.get('/merchandise', inventoryService.getMerch);
-app.get('/search/:title', inventoryService.getSearhResults);
+app.get('/search/:searchParam', inventoryService.getSearhResults);
 
 
 app.listen(port, () => {
