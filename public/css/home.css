@@ -1,0 +1,44 @@
+
+.home__header {
+    color: white;
+    font-family: '', monospace;
+    font-size: 55px;
+    margin-bottom: 1.5rem;
+}
+
+.home__header2 {
+    color: white;
+    font-family: '', monospace;
+    font-size: 55px;
+    margin-top: 18.0rem;
+    margin-bottom: 1.5rem;
+}
+
+.home__container {
+    display: inline-block;
+    margin-top: 1rem;
+    width: 600px;
+    height: 300px;
+    border-radius: 5px;
+    padding: 16px;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+
+.home_label {
+    font-family: '', monospace;
+    font-size: 30px;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.home_text1 {
+    font-family: '', monospace;
+    font-size: 18px;
+    color: rgb(7, 1, 1);
+    margin-top: 1rem;
+    font-weight: normal;
+}
