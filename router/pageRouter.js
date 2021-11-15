@@ -16,6 +16,8 @@ router.get("/newsfeed", pageController.getNewsFeedPage);
 router.get("/merchandise", inventoryController.getMerchPage);
 router.get("/games", inventoryController.getGamePage);
 
+router.post("/search/", inventoryController.searchInventory);
+
 router.use("/", errorRouter);
 
 

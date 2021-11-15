@@ -57,3 +57,25 @@ exports.getMerchPage = (req, res) => {
     res.render('games', {session : req.session.user_ApiToken, data: 0 });
   });
 };
+
+
+exports.searchInventory = (req, res) => {
+  //let searchParam = req.body.search.split(" ").join("-");
+  let endPoint = API_URL + req.path + req.body.search;
+
+  console.log(endPoint + "\n");
+
+  api.get(endPoint, req.query).then((response) => {
+      const searchObj = response.data;
+
+      res.render('searchResults', {session : req.session.user_ApiToken, data: searchObj, param: req.body.search });
+
+    })
+    .catch((error) => {
+      req.flash("error", "Error with Search Functionality");
+      res.redirect("/home");
+    });
+
+
+
+};

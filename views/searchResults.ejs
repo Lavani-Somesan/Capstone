@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8" />
 
-    <title>Merchandise</title>
+    <title>Search Results</title>
 
     <link rel="stylesheet" href="css/inventory.css" />
 </head>
 
 <body>
     <div class="inventory">
-        <h1 class="inv__pageTitle">Merchandise</h1>
+        <h1 class="inv__pageTitle">Search Results for <%- param %> </h1>
 
         <% for (let i = 0; i < data.length; i++) { %>
             <div class="inv__row">
@@ -27,6 +27,10 @@
                             <%- data[i].price %>
                         </p>
 
+                        <p class="inv__sectionContent">
+                            <%- data[i].description %>
+                        </p>
+
                         <% if(data[i].numInStock <= 0) { %>
                             <p>Out of Stock</p>
                             <% } %>
@@ -40,11 +44,9 @@
             </div>
             <% } %>
 
-            <% if(data.length == 0) { %>
+            <% if(data.length < 1) { %>
                 <div class="unavail__container">
-                    <p class="unavail__label">Sorry, Our Merch is Currently Unavailable</p> <br>
-                    <p class="unavail__text1">Please Check Back Soon as We Resolve this Issue </p> <br>
-                    <p class="unavail__text2">Thank You! </p> <br>
+                    <p class="unavail__label">Sorry, No Results Found!!  </p> <br>
                 </div>
             <% } %>
     </div>

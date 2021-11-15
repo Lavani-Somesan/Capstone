@@ -1,4 +1,4 @@
-const port = 8050;
+const port = 8000;
 const path = require('path');
 const router = require("./router/main");
 
@@ -43,6 +43,7 @@ app.use((req, res, next) => {
 app.set('views', path.join(__dirname, 'views'));
 app.use('/', express.static(__dirname + '/public'));
 app.use('/user', express.static(__dirname + '/public'));
+app.use('/search/', express.static(__dirname + '/public'));
 
 app.set("view engine", "ejs");
 app.use(layouts);
