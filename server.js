@@ -44,6 +44,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.use('/', express.static(__dirname + '/public'));
 app.use('/user', express.static(__dirname + '/public'));
 app.use('/search/', express.static(__dirname + '/public'));
+app.use('/games/', express.static(__dirname + '/public'));
+app.use('/merchandise/', express.static(__dirname + '/public'));
 
 app.set("view engine", "ejs");
 app.use(layouts);

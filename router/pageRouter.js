@@ -14,9 +14,16 @@ router.get("/account-guide", pageController.getAccountGuidePage);
 router.get("/newsfeed", pageController.getNewsFeedPage);
 
 router.get("/merchandise", inventoryController.getMerchPage);
-router.get("/games", inventoryController.getGamePage);
 
 router.post("/search/", inventoryController.searchInventory);
+
+//Game Routes
+router.get("/games/", inventoryController.getGamePage);
+router.get("/games/:title", inventoryController.getProduct);
+
+//Merch Routes
+router.get("/merchandise/", inventoryController.getMerchPage);
+router.get("/merchandise/:title", inventoryController.getProduct);
 
 router.use("/", errorRouter);
 
