@@ -131,3 +131,37 @@ exports.update_ApiToken = function(req, res) {
     });
 
 };
+
+exports.getProfile = function(req,res)
+{
+    User.findOne({ apiToken: req.params.token })
+    .then(user => {
+
+        let randomID = Math.floor((Math.random() * 100000) + 10000);
+
+        if (user)  {
+            console.log("API Token Matched\n");
+            let payload = {
+                responseID: randomID,
+                report: "Success, API Token Matched"
+            };
+            res.json(payload);
+        }
+        else {
+            console.log("No API token found\n");
+            let payload = {
+                responseID: randomID,
+                report: "Error, No API Token found"
+            }
+            return res.json(payload);
+        }
+    })
+    .catch(error => {
+        console.log(`Cannot Connect to Database: ${error.message}`);
+            let payload = {
+                responseID: randomID,
+                report: "Error, Unsuccessful in Connecting To  Database"
+            }
+            res.json(payload);
+    });
+};
