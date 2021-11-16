@@ -1,5 +1,6 @@
 const port = 5000;
 let bodyParser = require('body-parser');
+const apiAdapter = require('../../api/apiAdapter');
 
 express = require("express"),
     mongoose = require('mongoose'),
@@ -27,7 +28,11 @@ dataBase.once("open", () => {
 
 
 //Routes
-app.get('/games', inventoryService.getGames);
+app.get('/games/', inventoryService.getGames);
+app.get('/merchandise/', inventoryService.getMerch);
+app.get('/games/:title', inventoryService.getProduct);
+app.get('/merchandise/:title', inventoryService.getProduct);
+app.get('/search/:searchParam', inventoryService.getSearhResults);
 
 
 app.listen(port, () => {

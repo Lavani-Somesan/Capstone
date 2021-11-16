@@ -29,6 +29,11 @@ const inventorySchema = mongoose.Schema({
   price: {
     type: Number,
     required: true,
+  },
+
+  brand: {
+    type: String,
+    required: true
   }
 
 });

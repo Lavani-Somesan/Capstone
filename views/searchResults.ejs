@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8" />
 
-    <title>Games</title>
+    <title>Search Results</title>
 
     <link rel="stylesheet" href="css/inventory.css" />
 </head>
 
 <body>
     <div class="inventory">
-        <h1 class="inv__pageTitle">Games</h1>
+        <h1 class="inv__pageTitle">Search Results for <%- param %> </h1>
 
         <% for (let i = 0; i < data.length; i++) { %>
             <div class="inv__row">
@@ -20,11 +20,15 @@
                         <img class="inv__image" src="<%= data[i].imageURL %>" />
 
                         <h2 class="inv__sectionTitle">
-                            <%- data[i].title %><br /><br />
+                            <%- data[i].title.split("-").join(" ") %><br /><br />
                         </h2>
 
                         <p class="inv__sectionContent">Price: $
                             <%- data[i].price %>
+                        </p>
+
+                        <p class="inv__sectionContent">
+                            <%- data[i].description %>
                         </p>
 
                         <% if(data[i].numInStock <= 0) { %>
@@ -33,18 +37,16 @@
                             
                                 <% if(data[i].numInStock > 0) { %>
                                     <a href="/cart/add/<%= data[i]._id %>">Add to Cart</a> |
-                                    <a href="/games/<%= data[i].title %>">View Product</a>
+                                    <a href="/product/<%= data[i].title %>">View Product</a>
                                     <% } %>
                     </div>
                 </div>
             </div>
             <% } %>
 
-            <% if(data.length == 0) { %>
+            <% if(data.length < 1) { %>
                 <div class="unavail__container">
-                    <p class="unavail__label">Sorry, Our Merch is Currently Unavailable</p> <br>
-                    <p class="unavail__text1">Please Check Back Soon as We Resolve this Issue </p> <br>
-                    <p class="unavail__text2">Thank You! </p> <br>
+                    <p class="unavail__label">Sorry, No Results Found!!  </p> <br>
                 </div>
             <% } %>
     </div>

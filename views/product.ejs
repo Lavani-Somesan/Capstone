@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="css/product.css">
+        <title><%- data.title%></title>
+    </head>
+
+    <body>
+        <div class="product">
+
+            <div class="product__row">
+                <div class="product__column">
+                    <div class="product__card">
+
+                        <h1 class="product__pageTitle"><%- data.title %></h1>
+                        <img class="product__image" src="<%= data.imageURL %>" />
+
+                        <p class="product__sectionContent">
+                            Price: $
+                            <%- data.price %>
+                        </p>
+
+                        <p class="product__sectionContent">
+                            <%- data.description %>
+                        </p>
+
+                        <p class="product__sectionContent">
+                            <label>Number In Stock: </label>
+                            <%- data.numInStock %>
+                        </p>
+
+                        <a href="/cart/add/<%= data._id %>">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>     
+    </body>
+
+</html>
