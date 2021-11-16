@@ -137,10 +137,11 @@ exports.getProfilePage =(req, res) => {
         
         if(userObj == 0)
         {
+            req.flash("error", resp.data.report);
             res.redirect("/home");
         }
         else{
-            res.redirect("/about");
+            res.render("profile", {session : req.session.user_ApiToken, data : userObj});
         }
     })
     .catch(error => {

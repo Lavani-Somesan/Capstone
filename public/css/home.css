@@ -10,7 +10,7 @@
     color: white;
     font-family: '', monospace;
     font-size: 55px;
-    margin-top: 18.0rem;
+    margin-top: 20.0rem;
     margin-bottom: 1.5rem;
 }
 
@@ -38,7 +38,15 @@
 .home_text1 {
     font-family: '', monospace;
     font-size: 18px;
-    color: rgb(7, 1, 1);
+  /*  color: rgb(7, 1, 1);*/
+  color:crimson;
     margin-top: 1rem;
     font-weight: normal;
+}
+.home_text2 {
+    font-family: '', monospace;
+    font-size: 18px;
+    color: rgb(7, 1, 1);
+    margin-top: 1rem;
+    font-weight:bolder;
 }
