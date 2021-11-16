@@ -54,7 +54,7 @@ router.get('/apiToken/:token', (req, res, next) => {
     })
 });
 
-router.get('/user/profile/apiToken/:token', (req, res, next) => {
+router.get('/user/profile/apiToken/:token', (req, res) => {
     let endpoint = req.path;
 
     console.log("\nPassing through API Endpoint");

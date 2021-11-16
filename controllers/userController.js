@@ -120,11 +120,12 @@ exports.update_ApiToken = (req, res) => {
 
 exports.getProfilePage =(req, res) => {
 
-    let endPoint = API_URL + `/apiToken/${req.session.user_ApiToken}`;
+    let endPoint = API_URL + `/user/profile/apiToken/${req.session.user_ApiToken}`;
     
     console.log("Posting to API\n");
     
     api.get(endPoint).then(resp => {
+
         const userObj = resp.data.user;
 
         if(resp.data.responseID != null && !resp.data.report.includes("Error")) {
@@ -133,7 +134,7 @@ exports.getProfilePage =(req, res) => {
             console.log(`Error, Response ID:  ${resp.data.responseID}`);
         }
 
-        console.log(userObj);
+        console.log(resp.data.user);
         
         if(userObj == 0)
         {

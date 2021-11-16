@@ -138,7 +138,6 @@ exports.getProfile = function(req,res)
     .then(user => {
 
         let randomID = Math.floor((Math.random() * 100000) + 10000);
-        console.log(user);
         
         if (user)  {
             console.log("API Token Matched\n");
@@ -156,7 +155,7 @@ exports.getProfile = function(req,res)
                 responseID: randomID,
                 report: "Error, No API Token found"
             }
-            return res.json(payload);
+            res.json(payload);
         }
     })
     .catch(error => {
