@@ -7,6 +7,7 @@
     "axios": "^0.23.0",
     "body-parser": "^1.19.0",
     "cities": "^2.0.0",
+    "concurrently": "^6.4.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.5",
     "ejs": "^3.1.6",
@@ -24,7 +25,11 @@
   "devDependencies": {},
   "scripts": {
     "test": "npm start",
-    "start": "node server.js"
+    "start": "node server.js",
+    "api": "(cd ./api && node main.js)",
+    "user-service": "(cd ./services/userService && node main.js)",
+    "inventory-service": "(cd ./services/inventoryService && node main.js)",
+    "dev": "concurrently \"npm run api\" \"npm run user-service\" \"npm run inventory-service\" \"npm start\""
   },
   "repository": {
     "type": "git",
