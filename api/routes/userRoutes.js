@@ -54,6 +54,21 @@ router.get('/apiToken/:token', (req, res, next) => {
     })
 });
 
+router.get('/user/profile/apiToken/:token', (req, res) => {
+    let endpoint = req.path;
+
+    console.log("\nPassing through API Endpoint");
+    
+    api.get(endpoint).then((resp) => {
+        console.log("Passing back through API Endpoint");
+        res.json(resp.data);
+    })
+    .catch(error => {
+        console.log(error.message);
+        res.send(null);
+    })
+});
+
 
 
 module.exports = router;

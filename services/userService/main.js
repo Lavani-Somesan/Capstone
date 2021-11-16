@@ -30,7 +30,7 @@ dataBase.once("open", () => {
 app.post('/user/create-account/:requestID', userService.createUser);
 app.post('/user/authentication/:requestID', userService.authenticate);
 app.get('/apiToken/:token', userService.update_ApiToken);
-
+app.get('/user/profile/apiToken/:token', userService.getProfile);
 
 app.listen(port, () => {
     console.log(`User Service is Listening on localhost:${port}`);

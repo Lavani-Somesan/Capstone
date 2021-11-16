@@ -114,4 +114,38 @@ exports.update_ApiToken = (req, res) => {
     .catch(error => {
         console.log(`Request Failed: ${error.message}`);
     });
+
+
 };
+
+exports.getProfilePage =(req, res) => {
+
+    let endPoint = API_URL + `/user/profile/apiToken/${req.session.user_ApiToken}`;
+    
+    console.log("Posting to API\n");
+    
+    api.get(endPoint).then(resp => {
+
+        const userObj = resp.data.user;
+
+        if(resp.data.responseID != null && !resp.data.report.includes("Error")) {
+            console.log(`Success, Response ID: ${resp.data.responseID}`);
+        } else {
+            console.log(`Error, Response ID:  ${resp.data.responseID}`);
+        }
+
+        console.log(resp.data.user);
+        
+        if(userObj == 0)
+        {
+            req.flash("error", resp.data.report);
+            res.redirect("/home");
+        }
+        else{
+            res.render("profile", {session : req.session.user_ApiToken, data : userObj});
+        }
+    })
+    .catch(error => {
+        console.log(`Request Failed: ${error.message}`);
+    });
+}

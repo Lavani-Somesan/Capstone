@@ -37,3 +37,8 @@ exports.getNewsFeedPage = (req, res) => {
     res.render("newsfeed", {session : req.session.user_ApiToken});
 
 }
+exports.getProfilePage = (req, res) => {
+    
+    res.render("profile", {session : req.session.user_ApiToken});
+
+}
