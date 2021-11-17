@@ -1,0 +1,81 @@
+.cart {
+    margin-left: 8rem;
+}
+
+.cart__pageTitle {
+    text-align: left;
+    margin-left: 3rem;
+}
+
+.cart__errorMessage {
+    font-size: 20px;
+    margin-top: 5rem;
+    font-weight: bold;
+    text-align: left;
+    margin-left: 3rem;
+}
+
+.cart__pageDivider {
+    border-bottom: 2px solid black;
+    width: 820px;
+    text-align: right;
+    margin-left: 2rem;
+    margin-top: 2rem;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.cart__container {
+    display: block;
+}
+
+.cart__card {
+    padding: 16px;
+    background-color: white;
+    width: 800px;
+    height: 100px;
+    margin: 2rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+.cart__image {
+    float: left;
+    width: 100px;
+    height: 100px;
+}
+
+.cart__card:hover {
+    box-shadow: 0 8px 25px 0 rgba(0, 0, 0, 0.4);
+}
+
+.cart__cardTitle {
+    float: left;
+    margin-left: 2rem;
+    margin-top: 1rem;
+    text-decoration: none;
+    font-size: 20px;
+    color: black;
+    font-weight: bold;
+}
+
+.cart__priceTitle {
+    float: right;
+    margin-top: 1rem;
+}
+
+.cart__buttonContainer {
+    text-align: left;
+    position: absolute;
+    margin-left: 8rem;
+}
+
+.cart__deleteButton {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 4rem;
+    text-decoration: underline;
+}

@@ -39,6 +39,17 @@ app.use((req, res, next) => {
     next();
 });
 
+//Cart middleware
+app.use(function(req, res, next){
+    if(!req.session.cart){
+	  req.session.cart = [];
+	}
+    else {
+        res.locals.cartItems = req.session.cart;
+    }
+	next();
+  });
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.use('/', express.static(__dirname + '/public'));

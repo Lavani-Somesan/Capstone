@@ -1,11 +1,6 @@
-
 const apiAdapter = require('../api/apiAdapter');
 const API_URL = 'http://localhost:2000';
 const api = apiAdapter(API_URL);
-
-const { session } = require('passport');
-const { data } = require('jquery');
-const express = require('express');
 
 
 exports.createUser = (req, res) => {
@@ -149,3 +144,43 @@ exports.getProfilePage =(req, res) => {
         console.log(`Request Failed: ${error.message}`);
     });
 }
+
+
+exports.getCartPage = (req, res) => {
+
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "LogIn to View Cart");
+        res.redirect("/login");
+    } else {
+        res.render("cart", {session : req.session.user_ApiToken, data : req.session.cart});
+    }
+};
+
+
+exports.addToCart = (req, res) => {
+
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn to Add Product to Cart");
+        res.redirect("/login")
+    } else {
+        let endPoint = API_URL + req.path;
+
+        console.log(endPoint);
+        
+        api.get(endPoint).then((response) => {
+
+            if(response.data.product != 0) {
+                req.session.cart.push(response.data);
+                res.redirect("/user/cart");
+            } else  {
+                req.flash("error", "Error Adding Item to Cart, Please Try Again");
+                res.redirect("/home");
+            }
+          })
+          .catch((error) => {
+            req.flash("error", "Error Product Cannot Be Added to Cart");
+            res.redirect("/cart");
+          });
+          
+    }
+};
