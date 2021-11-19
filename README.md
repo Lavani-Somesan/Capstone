@@ -1,4 +1,4 @@
-# Capstone
+# Capstone Station X
 Creating a Game Store Web Application
 
 Note: If git pull fails when you are on a branch, do a git pull origin branchName which should immediately pull any changes without any problems.
