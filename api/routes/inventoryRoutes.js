@@ -93,4 +93,20 @@ router.get('/search/:searchParam', (req, res) => {
 });
 
 
+router.get('/cart/add/:id', (req, res) => {
+    let endPoint = req.path;
+
+    console.log("\nPassing through API Endpoint");
+    
+    api.get(endPoint).then((resp) => {
+        console.log("Passing back through API Endpoint");
+        res.json(resp.data);
+    })
+    .catch(error => {
+        console.log(error.message);
+        res.send(null);
+    })
+});
+
+
 module.exports = router;

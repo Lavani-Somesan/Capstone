@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Shopping Cart</title>
+
+    <link rel="stylesheet" href="css/cart.css">
+</head>
+
+<body>
+    <div class="cart">
+        <h1 class="cart__pageTitle">Shopping Cart</h1>
+
+        <% if (data.length > 0 ) { %>
+            <div class="cart__pageDivider">Price</div>
+
+            <div class="cart__cardContainer">
+                <% for (let i = 0; i < data.length; i++) { %>
+                    <div class="cart__card">
+
+                        <img class="cart__image" src="<%= data[i].imageURL %>" />
+                        <h2 class="cart__cardTitle">
+                            <%- data[i].title %><br /><br />
+                        </h2>
+
+                        <div class="cart__buttonContainer">
+
+                            <% if(data[i].category == "games") { %>
+                                <a class="cart__deleteButton" href="/games/<%= data[i].title %>">View Product</a> |
+                            <% }  else { %>
+                                <a class="cart__deleteButton" href="/merchandise/<%= data[i].title %>">View Product</a> |
+                             <% } %>
+                            
+                            <a class="cart__deleteButton" href="/user/cart/remove/<%= data[i]._id %>">Delete</a>
+                        </div>
+
+
+                        <h2 class="cart__priceTitle">
+                            $
+                            <%- data[i].price %>
+                        </h2>
+
+                    </div>
+                    <% } %>
+
+                    <br><br>
+                    <a href="/purchase/stock"><button>Purchase</button></a>
+            </div>
+            <% } %>
+
+                <% if(data.length < 1) { %>
+                    <div class="cart__errorMessage">Your shopping cart is empty</div>
+                    <% } %>
+    </div>
+</body>
+
+</html>

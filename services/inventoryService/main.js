@@ -33,6 +33,7 @@ app.get('/merchandise/', inventoryService.getMerch);
 app.get('/games/:title', inventoryService.getProduct);
 app.get('/merchandise/:title', inventoryService.getProduct);
 app.get('/search/:searchParam', inventoryService.getSearhResults);
+app.get('/cart/add/:id', inventoryService.addToCart);
 
 
 app.listen(port, () => {
