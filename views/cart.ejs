@@ -22,18 +22,26 @@
 
                         <img class="cart__image" src="<%= data[i].imageURL %>" />
                         <h2 class="cart__cardTitle">
-                            <%- data[i].title.split("-").join(" ") %><br /><br />
+                            <%- data[i].title %><br /><br />
                         </h2>
+
+                        <div class="cart__buttonContainer">
+
+                            <% if(data[i].category == "games") { %>
+                                <a class="cart__deleteButton" href="/games/<%= data[i].title %>">View Product</a> |
+                            <% }  else { %>
+                                <a class="cart__deleteButton" href="/merchandise/<%= data[i].title %>">View Product</a> |
+                             <% } %>
+                            
+                            <a class="cart__deleteButton" href="/user/cart/remove/<%= data[i]._id %>">Delete</a>
+                        </div>
+
 
                         <h2 class="cart__priceTitle">
                             $
                             <%- data[i].price %>
                         </h2>
 
-                        <div class="cart__buttonContainer">
-                            <a class="cart__deleteButton" href="/product/<%= data[i].title %>">View Product</a> |
-                            <a class="cart__deleteButton" href="/cart/remove/<%= data[i]._id %>">Delete</a>
-                        </div>
                     </div>
                     <% } %>
 

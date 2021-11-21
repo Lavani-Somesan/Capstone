@@ -33,11 +33,12 @@
     padding: 16px;
     background-color: white;
     width: 800px;
-    height: 100px;
+    height: 120px;
     margin: 2rem;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     font-size: 15px;
     transition: 0.3s;
+    position: relative;
 }
 
 .cart__image {
@@ -61,8 +62,10 @@
 }
 
 .cart__priceTitle {
-    float: right;
-    margin-top: 1rem;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
 }
 
 .cart__buttonContainer {

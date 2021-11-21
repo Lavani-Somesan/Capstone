@@ -9,6 +9,7 @@ router.get("/logout", userController.logout);
 router.get("/profile", userController.getProfilePage);
 router.get("/cart", userController.getCartPage);
 router.get("/cart/add/:id", userController.addToCart);
+router.get("/cart/remove/:id", userController.removeFromCart);
 
 router.use("/user", errorRouter);
 

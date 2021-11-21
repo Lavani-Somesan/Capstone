@@ -184,3 +184,20 @@ exports.addToCart = (req, res) => {
           
     }
 };
+
+exports.removeFromCart = (req, res) => {
+
+    console.log("HI");
+    console.log(req.params.id + " param\n");
+    console.log(req.session.cart[0]._id + "ID\n");
+
+    for(var i = 0; i < req.session.cart.length; i++) {
+
+        if(req.params.id == req.session.cart[i]._id) {
+            req.session.cart.splice(i, 1);
+        }
+    }
+
+    res.redirect("/user/cart");
+
+};
