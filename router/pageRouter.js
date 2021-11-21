@@ -2,6 +2,7 @@ const router = require("express").Router(),
 errorRouter = require("./errorRouter"),
 pageController = require("../controllers/pageController");
 inventoryController = require("../controllers/inventoryController");
+newsFeedController = require("../controllers/newsFeedController");
 
 //Page Routes
 router.get("/", pageController.getHomePage);
@@ -11,7 +12,7 @@ router.get("/create-account", pageController.getAccountCreationPage);
 router.get("/account-guide", pageController.getAccountGuidePage);
 router.get("/about", pageController.getAboutPage);
 router.get("/account-guide", pageController.getAccountGuidePage);
-router.get("/newsfeed", pageController.getNewsFeedPage);
+//router.get("/newsfeed", pageController.getNewsFeedPage);
 
 router.get("/merchandise", inventoryController.getMerchPage);
 
@@ -24,6 +25,9 @@ router.get("/games/:title", inventoryController.getProduct);
 //Merch Routes
 router.get("/merchandise/", inventoryController.getMerchPage);
 router.get("/merchandise/:title", inventoryController.getProduct);
+
+//NewsFeed Routes
+router.get("/newsFeed/", newsFeedController.getNewsFeedPage);
 
 router.use("/", errorRouter);
 

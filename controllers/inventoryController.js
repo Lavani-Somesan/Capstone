@@ -2,10 +2,6 @@ const apiAdapter = require('../api/apiAdapter');
 const API_URL = 'http://localhost:2000';
 const api = apiAdapter(API_URL);
 
-const { session } = require('passport');
-const { data } = require('jquery');
-const express = require('express');
-
 
 exports.getGamePage = (req, res) => {
     let endPoint = API_URL + req.path;
