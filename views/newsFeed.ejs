@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+
+    <title>NewsFeed</title>
+
+    <link rel="stylesheet" href="css/newsFeed.css" />
+</head>
+
+<body>
+    <div class="news">
+        <h1 class="news__pageTitle">NewsFeed</h1>
+
+        <% for (let i = 0; i < data.length; i++) { %>
+            <div class="news__row">
+                <div class="news__column">
+                    <div class="news__card">
+                        <img class="news__image" src="<%= data[i].imageURL %>" />
+
+                        <h2 class="news__sectionTitle">
+                            <%- data[i].title %><br /><br />
+                        </h2>
+
+                        <p class="news__sectionContent"> 
+                            <% if(data[i].endDate == 0) { %>
+                                <%- data[i].startDate %>
+                            <% } else { %>     
+                                <%- data[i].startDate %>
+                                -
+                                <%- data[i].endDate %>
+                            <% } %>
+                        </p>
+
+                        <p class="news__sectionContent"> 
+                        
+                            <a  style="color:red" href="/newsFeed/<%= data[i].title %>">Read More</a>    
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            <% } %>
+
+            <% if(data.length == 0) { %>
+                <div class="unavail__container">
+                    <p class="unavail__label">Sorry, Our NewsFeed is Currently Unavailable</p> <br>
+                    <p class="unavail__text1">Please Check Back Soon as We Resolve this Issue </p> <br>
+                    <p class="unavail__text2">Thank You! </p> <br>
+                </div>
+            <% } %>
+    </div>
+</body>
+
+</html>
