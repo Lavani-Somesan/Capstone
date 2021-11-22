@@ -58,7 +58,7 @@ exports.authentication = (req, res) => {
         }
         else {
             console.log("User Not Found, Error Logging in\n");
-            req.flash("error", "Failed to Log In");
+            req.flash("error", resp.data.report);
             res.redirect("/login"); 
         }   
     })

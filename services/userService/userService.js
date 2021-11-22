@@ -1,6 +1,8 @@
 const e = require('express');
 const { json } = require('body-parser');
 const randToken = require('rand-token');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 let mongoose = require('mongoose'),
     User = mongoose.model('Users');
@@ -16,8 +18,15 @@ exports.createUser = async function(req, res, next) {
     }
 
     let randID = Math.floor((Math.random() * 100000) + 10000);
+    
 
-    User.create(req.body)
+    User.create({
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        username: req.body.username,
+        password: await bcrypt.hash(req.body.password, saltRounds)
+    })
         .then(user => {
             console.log("User added");
                 let payload = {
@@ -50,7 +59,7 @@ exports.createUser = async function(req, res, next) {
 };
 
 
-exports.authenticate = function(req, res) {
+exports.authenticate = async function(req, res) {
 
     if(req != null){
         console.log("User Service", req.path, "request", "Success, request successful", req.params.requestID, "\n");
@@ -58,40 +67,39 @@ exports.authenticate = function(req, res) {
         console.log("User Service", req.path, "request", "Error, request not found", req.params.requestID, "\n");  
     }
 
-    User.findOne({ username: req.body.username })
-        .then(user => {
-            let randomID = Math.floor((Math.random() * 100000) + 10000);
+    let randomID = Math.floor((Math.random() * 100000) + 10000);
 
-            if (user && user.password === req.body.password) {
-                console.log("Successful in logging in\n");
-                let payload = {
-                    user: user,
-                    responseID: randomID,
-                    report: "Successful in logging in"
-                };
-                return res.json(payload);
-            } 
-            else {
-                console.log("Unsuccessful in Logging in, No User Found\n");
-                user = 0;
-                let payload = {
-                    user: user,
-                    responseID: randomID,
-                    report: "Error, Unsuccessful in Logging in"
-                }
-                return res.json(payload);
-            }
-        })
-        .catch(error => {
-            user = 0;
+    const user = await User.findOne({ username: req.body.username });
+
+    if(user) {
+        const comparePswrd = await bcrypt.compare(req.body.password, user.password);
+
+        if(comparePswrd) {
+            console.log("Successful in logging in\n");
             let payload = {
                 user: user,
+                responseID: randomID,
+                report: "Successful in logging in"
+            };
+            return res.json(payload);
+        } else {
+            console.log("Error, Username or Password Incorrect\n");
+                let payload = {
+                    user: 0,
+                    responseID: randomID,
+                    report: "Error, Username or Password Incorrect"
+                }
+                return res.json(payload);
+        } 
+    } else {
+            let payload = {
+                user: 0,
                 responseID: randomID,
                 report: "Error, Unsuccessful in Logging in"
             }
             console.log(`Error doing authentication: ${error.message}\n`);
             return res.json(payload);
-        });
+    }
 };
 
 
