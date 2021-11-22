@@ -10,26 +10,30 @@
 </head>
 
 <body>
-    <div class="inventory">
-        <h1 class="inv__pageTitle">NewsFeed</h1>
+    <div class="news">
+        <h1 class="news__pageTitle">NewsFeed</h1>
 
         <% for (let i = 0; i < data.length; i++) { %>
-            <div class="inv__row">
-                <div class="inv__column">
-                    <div class="inv__card">
-                        <img class="inv__image" src="<%= data[i].imageURL %>" />
+            <div class="news__row">
+                <div class="news__column">
+                    <div class="news__card">
+                        <img class="news__image" src="<%= data[i].imageURL %>" />
 
-                        <h2 class="inv__sectionTitle">
+                        <h2 class="news__sectionTitle">
                             <%- data[i].title %><br /><br />
                         </h2>
 
-                        <p class="inv__sectionContent"> 
-                            <%- data[i].startDate %>
-                            -
-                            <%- data[i].endDate %>
+                        <p class="news__sectionContent"> 
+                            <% if(data[i].endDate == 0) { %>
+                                <%- data[i].startDate %>
+                            <% } else { %>     
+                                <%- data[i].startDate %>
+                                -
+                                <%- data[i].endDate %>
+                            <% } %>
                         </p>
 
-                        <p class="inv__sectionContent"> 
+                        <p class="news__sectionContent"> 
                         
                             <a  style="color:red" href="/newsFeed/<%= data[i].title %>">Read More</a>    
                         </p>
