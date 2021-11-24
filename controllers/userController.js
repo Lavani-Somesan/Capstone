@@ -51,7 +51,8 @@ exports.authentication = (req, res) => {
 
         if (Object.keys(userObj).length > 0) {
             req.session.user_ApiToken = userObj.apiToken; //Starts session
-            req.session.user_ID = resp.data._id; 
+            req.session.user_ID = userObj._id; 
+            req.session.cartTotal = 0;
 
             req.flash("success", "Logged In Successfully!")
             res.redirect("/home");
@@ -152,7 +153,7 @@ exports.getCartPage = (req, res) => {
         req.flash("error", "LogIn to View Cart");
         res.redirect("/login");
     } else {
-        res.render("cart", {session : req.session.user_ApiToken, data : req.session.cart});
+        res.render("cart", {session : req.session.user_ApiToken, data : req.session.cart, total : req.session.cartTotal});
     }
 };
 
@@ -171,6 +172,8 @@ exports.addToCart = (req, res) => {
 
             if(response.data.product != 0) {
                 req.session.cart.push(response.data);
+                req.session.cartTotal  += response.data.price;
+
                 res.redirect("/user/cart");
             } else  {
                 req.flash("error", "Error Adding Item to Cart, Please Try Again");
@@ -187,17 +190,12 @@ exports.addToCart = (req, res) => {
 
 exports.removeFromCart = (req, res) => {
 
-    console.log("HI");
-    console.log(req.params.id + " param\n");
-    console.log(req.session.cart[0]._id + "ID\n");
-
     for(var i = 0; i < req.session.cart.length; i++) {
 
         if(req.params.id == req.session.cart[i]._id) {
-            req.session.cart.splice(i, 1);
+            req.session.cartTotal -= req.session.cart[i].price;
+            req.session.cart.splice(i, 1);   
         }
     }
-
     res.redirect("/user/cart");
-
 };

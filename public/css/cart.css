@@ -3,6 +3,7 @@
 }
 
 .cart__pageTitle {
+    color: white;
     text-align: left;
     margin-left: 3rem;
 }
@@ -16,12 +17,13 @@
 }
 
 .cart__pageDivider {
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid rgb(3, 14, 14);
     width: 820px;
     text-align: right;
     margin-left: 2rem;
     margin-top: 2rem;
-    font-size: 20px;
+    padding-bottom: 10px;
+    font-size: 25px;
     font-weight: bold;
 }
 
