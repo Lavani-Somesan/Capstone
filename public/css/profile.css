@@ -1,11 +1,11 @@
-.about__header {
+.profile__header {
     color: white;
     font-family: '', monospace;
     font-size: 55px;
     margin-bottom: 1.5rem;
 }
 
-.about__container {
+.profile__container {
     display: inline-block;
     margin-top: 1rem;
     width: 600px;
@@ -17,7 +17,7 @@
 }
 
 
-.about__label {
+.profile__label {
     font-family: '', monospace;
     font-size: 30px;
     color: rgb(0, 0, 0);
@@ -26,7 +26,7 @@
     margin-bottom: 1rem;
 }
 
-.about__text1 {
+.profile__text1 {
     font-family: '', monospace;
     font-size: 18px;
     color: rgb(7, 1, 1);
