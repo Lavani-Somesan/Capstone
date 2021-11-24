@@ -14,7 +14,7 @@
         <h1 class="cart__pageTitle">Shopping Cart</h1>
 
         <% if (data.length > 0 ) { %>
-            <div class="cart__pageDivider">Price</div>
+            <div  style="color:white" class="cart__pageDivider">SubTotal</div>
 
             <div class="cart__cardContainer">
                 <% for (let i = 0; i < data.length; i++) { %>
@@ -44,6 +44,11 @@
 
                     </div>
                     <% } %>
+
+                    <div  style="color:white" class="cart__pageDivider">
+                        <%- total.toFixed(2) %>
+                    
+                    </div>
 
                     <br><br>
                     <a href="/purchase/stock"><button>Purchase</button></a>

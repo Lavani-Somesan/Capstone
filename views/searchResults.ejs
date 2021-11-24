@@ -36,9 +36,15 @@
                             <% } %>
                             
                                 <% if(data[i].numInStock > 0) { %>
-                                    <a href="/cart/add/<%= data[i]._id %>">Add to Cart</a> |
-                                    <a href="/product/<%= data[i].title %>">View Product</a>
-                                    <% } %>
+                                    <a href="/user/cart/add/<%= data[i]._id %>">Add to Cart</a> |
+
+                                    <% if(data[i].category.includes("games")) { %>
+                                    
+                                    <a href="/games/<%= data[i].title %>">View Product</a>
+                                    <% }  else { %>
+                                        <a href="/merchandise/<%= data[i].title %>">View Product</a>
+                                     <% } %>
+                                 <% } %>
                     </div>
                 </div>
             </div>
