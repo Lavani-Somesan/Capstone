@@ -5,6 +5,10 @@ body {
     background: linear-gradient(to left, #4882ee, #7e28a0);
 }
 
+footer {
+    bottom: 0;
+}
+
 .pageTitle {
     margin-top: 5rem;
     margin-bottom: 3rem;

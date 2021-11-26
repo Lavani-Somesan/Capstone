@@ -5,7 +5,7 @@ inventoryController = require("../controllers/inventoryController");
 newsFeedController = require("../controllers/newsFeedController");
 
 //Page Routes
-router.get("/", pageController.getHomePage);
+router.get("/", inventoryController.getHomePage);
 router.get("/home", inventoryController.getHomePage);
 router.get("/login", pageController.getLoginPage);
 router.get("/create-account", pageController.getAccountCreationPage);
