@@ -6,13 +6,12 @@ newsFeedController = require("../controllers/newsFeedController");
 
 //Page Routes
 router.get("/", pageController.getHomePage);
-router.get("/home", pageController.getHomePage);
+router.get("/home", inventoryController.getHomePage);
 router.get("/login", pageController.getLoginPage);
 router.get("/create-account", pageController.getAccountCreationPage);
 router.get("/account-guide", pageController.getAccountGuidePage);
 router.get("/about", pageController.getAboutPage);
 router.get("/account-guide", pageController.getAccountGuidePage);
-//router.get("/newsfeed", pageController.getNewsFeedPage);
 
 router.get("/merchandise", inventoryController.getMerchPage);
 

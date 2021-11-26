@@ -3,6 +3,32 @@ const API_URL = 'http://localhost:2000';
 const api = apiAdapter(API_URL);
 
 
+exports.getHomePage = (req, res) => {
+  let endPoint = API_URL + req.path;
+  
+  console.log("Posting to API\n");
+  
+  api.get(endPoint).then((resp) => {
+
+    const productObj = resp.data;
+
+    if(productObj) {
+        console.log('Success in retreiving Favorite inventory\n');
+        res.render('home', {session : req.session.user_ApiToken, data: resp.data });
+    } else {
+          console.log('Error in retreiving Favorite inventory\n');
+          res.render('home', {session : req.session.user_ApiToken, data: resp.data });
+    }
+    
+  })
+  .catch((error) => {
+    console.log("Error in retreiving Favorite inventory\n");
+    res.render('home', {session : req.session.user_ApiToken, data: 0 });
+  });
+}
+
+
+
 exports.getGamePage = (req, res) => {
     let endPoint = API_URL + req.path;
     

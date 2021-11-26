@@ -4,6 +4,23 @@ let mongoose = require('mongoose'),
     Inventory = mongoose.model('Inventory');
 
 
+    exports.getFavoriteInv = function(req, res) {
+        
+        Inventory.find({favorite : 'Yes'}, function(err, favInv) {
+            let randomID = Math.floor((Math.random() * 100000) + 10000);
+
+            if(favInv == 0) {
+                console.log("Favorite Inv", req.path, "response", "Error, Favorite Inventory Cannot be Retreived", randomID + "\n\n");
+
+            } else {
+                console.log("Favorite Inv", req.path, "response", "Success, Favorite Inventory Retreived", randomID + "\n\n");
+            }
+            
+            res.json(favInv);
+        });
+    }
+
+
     exports.getGames = function(req, res) {
 
         Inventory.find({category : 'games'}, function(err, games) {
