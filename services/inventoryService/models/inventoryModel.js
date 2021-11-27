@@ -34,6 +34,11 @@ const inventorySchema = mongoose.Schema({
   brand: {
     type: String,
     required: true
+  },
+
+  favorite: {
+    type: String,
+    required: true,
   }
 
 });

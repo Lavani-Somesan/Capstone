@@ -1,33 +1,93 @@
 <!DOCTYPE html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+
+    <link rel="stylesheet" href="css/inventory.css" />
     <link rel="stylesheet" href="css/home.css">
-</head>
 
-
-<html>
     <title>Home</title>
 
-    <body>
-        <div class="home">
-            <h1 class="home__header">Featured Items</h1>
+</head>
 
-               
-                <h2 class="home__header2">Contact Us!</h2>
-                <p class="home__text2">By Mail:</p>
-                <br>
-                <p class="home__text1">11000 University Pkwy</p>
-                <p class="home__text1">Pensacola, FL 32514</p>
-                <br><br>
-                <p class="home__text1">Phone:</p>
-                <br>
-                <p class="home__text1">850-555-1234</p>
-                <br><br>
-                <p class="home__text1">Email:</p>
-                <br>
-                <p class="home__text1">customerservice@stationx.com</p>
-               
-            </form>
+<html>
+    <body>
+        
+
+        <div class="home__container">
+            <label class="home__label">Welcome to StationX!</label> <br><br>
+            <p class="home__text1">Check Out our Most Popular Games Down Below</p> <br>
+            <p class="home__text1">We Also Have Some Events/Deals Going on Right Now Which You Can Find <br> More Info About On Our NewsFeed</p> <br>
+            <p class="home__text1">Please Follow Us On Social Media To Get The Latest Updates & Exclusive Content, <br> Links Are Down Below</p> <br>
+            <p class="home__text1">Contact Support If You Are Experiencing Any Problems, More Info Down Below</p><br>
+            <p class="home__text1">We Hope You Enjoy Using Our Application</p><br>
         </div>
+
+        <div class="inventory">
+
+            <h1 class="inv__pageTitle">Popular Items</h1>
+
+            <% if(data.length == 0) { %>
+                <div class="unavail__container">
+                    <p class="unavail__label">Sorry, Our Favorite Games/Merch is Currently Unavailable</p> <br>
+                    <p class="unavail__text1">Please Check Back Soon as We Resolve this Issue </p> <br>
+                    <p class="unavail__text2">Thank You! </p> <br>
+                </div>
+            
+            <% } else { 
+
+                var i = 0;
+                const maxIterations = 6; 
+                let randNum = [];
+                var dataNum = 0;
+                var exit = 0; 
+            %>
+    
+            <% do { 
+
+                do { 
+                    dataNum = Math.floor(Math.random() * data.length); 
+
+                     if(!randNum.includes(dataNum)) { 
+                         randNum.push(dataNum);
+                         exit = 1; 
+                      } 
+                 } while(exit != 1); 
+
+                exit = 0; %>
+
+                <div class="inv__row">
+                    <div class="inv__column">
+                        <div class="inv__card">
+                            <img class="inv__image" src="<%= data[dataNum].imageURL %>" />
+    
+                            <h2 class="inv__sectionTitle">
+                                <%- data[dataNum].title %><br /><br />
+                            </h2>
+    
+                            <p class="inv__sectionContent">Price: $
+                                <%- data[dataNum].price %>
+                            </p>
+    
+                            <% if(data[dataNum].numInStock <= 0) { %>
+                                <p>Out of Stock</p>
+                                <% } %>
+                                
+                                    <% if(data[dataNum].numInStock > 0) { %>
+                                        <a href="/user/cart/add/<%= data[dataNum]._id %>">Add to Cart</a> |
+                                        <% } %>
+    
+                                        <a href="/games/<%= data[dataNum].title %>">View Product</a>
+                        </div>
+                    </div>
+                </div>
+                <% i++;
+                    if(data.length == i) {
+                        return;
+                    }
+
+                } while(i <  maxIterations);
+             } %>
+        </div>
+        
     </body>
 </html>

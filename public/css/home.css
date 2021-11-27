@@ -1,32 +1,17 @@
-
-.home__header {
-    color: white;
-    font-family: '', monospace;
-    font-size: 55px;
-    margin-bottom: 1.5rem;
-}
-
-.home__header2 {
-    color: white;
-    font-family: '', monospace;
-    font-size: 55px;
-    margin-top: 20.0rem;
-    margin-bottom: 1.5rem;
-}
-
 .home__container {
     display: inline-block;
-    margin-top: 1rem;
-    width: 600px;
-    height: 300px;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+    width: 1000px;
+    height: 400px;
     border-radius: 5px;
     padding: 16px;
-    background-color: white;
+    background-color: rgb(106, 197, 209);
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 
 
-.home_label {
+.home__label {
     font-family: '', monospace;
     font-size: 30px;
     color: rgb(0, 0, 0);
@@ -35,18 +20,11 @@
     margin-bottom: 1rem;
 }
 
-.home_text1 {
-    font-family: '', monospace;
-    font-size: 18px;
-  /*  color: rgb(7, 1, 1);*/
-  color:crimson;
-    margin-top: 1rem;
-    font-weight: normal;
-}
-.home_text2 {
+.home__text1 {
     font-family: '', monospace;
     font-size: 18px;
     color: rgb(7, 1, 1);
     margin-top: 1rem;
-    font-weight:bolder;
+    font-weight: normal;
+    padding: 1px;
 }

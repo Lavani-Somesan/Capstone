@@ -1,8 +1,3 @@
-exports.getHomePage = (req, res) => {
-    
-    res.render("home", {session : req.session.user_ApiToken});
-}
-
 exports.getLoginPage = (req, res) => {
 
     if (req.session.user_ApiToken) {
