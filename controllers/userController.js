@@ -116,7 +116,11 @@ exports.update_ApiToken = (req, res) => {
 
 exports.getProfilePage =(req, res) => {
 
-    let endPoint = API_URL + `/user/profile/apiToken/${req.session.user_ApiToken}`;
+    if(!req.session.user_ApiToken) {
+        req.flash('error', "Please LogIn To View Profile");
+        res.redirect('/login');
+    } else {
+        let endPoint = API_URL + `/user/profile/apiToken/${req.session.user_ApiToken}`;
     
     console.log("Posting to API\n");
     
@@ -144,6 +148,8 @@ exports.getProfilePage =(req, res) => {
     .catch(error => {
         console.log(`Request Failed: ${error.message}`);
     });
+
+    }
 }
 
 
@@ -183,8 +189,7 @@ exports.addToCart = (req, res) => {
           .catch((error) => {
             req.flash("error", "Error Product Cannot Be Added to Cart");
             res.redirect("/cart");
-          });
-          
+          });     
     }
 };
 
@@ -199,3 +204,14 @@ exports.removeFromCart = (req, res) => {
     }
     res.redirect("/user/cart");
 };
+
+
+exports.getAccountSettingsPage = (req, res) => {
+
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn to View Your Account Settings ");
+        res.redirect("/login")
+    } else {
+        res.render("accountSettings", {session : req.session.user_ApiToken});
+    }
+}
