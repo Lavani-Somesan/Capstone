@@ -14,13 +14,13 @@
             <h1 class="login__header">StationX Account</h1>
     
             <form class="login__form" action="/user/authentication" method="POST">
-                <input class="login__input" type="text" id="username" name="username" 
+                <input class="login__input" type="text" autocomplete="off" id="username" name="username" 
                     minlength="2" maxlength="12" placeholder="Username" required><br><br>
 
                 <input class="login__input password" type="password" id="password" name="password" 
                     minlength="8" maxlength="30"placeholder="Password" required>
 
-                    <i id="visibility" onclick="toggleFunction()"class="material-icons eye__icon">visibility</i>  
+                    <i id="eye__icon" onclick="toggleFunction()"class="material-icons eye__icon">visibility</i>  
                     <br><br>
 
                     <script>
@@ -28,9 +28,11 @@
                             
                           if(document.getElementById("password").type == "password") {
                             document.getElementById("password").type = "text";
+                            document.getElementById("eye__icon").style.color = "black";
                             
                           } else {
                             document.getElementById("password").type = "password";
+                            document.getElementById("eye__icon").style.color = "gray";
                           }
                         }
                         </script>

@@ -25,12 +25,11 @@
                             <%- data.description %>
                         </p>
 
-                        <p class="product__sectionContent">
-                            <label>Number In Stock: </label>
-                            <%- data.numInStock %>
-                        </p>
-
-                        <a href="/user/cart/add/<%= data._id %>">Add to Cart</a>
+                        <br>
+                        
+                        <% if(data.numInStock > 0) { %>
+                            <a href="/user/cart/add/<%= data._id %>" style="font-size: 18px;">Add to Cart</a>
+                            <% } %>
                     </div>
                 </div>
             </div>

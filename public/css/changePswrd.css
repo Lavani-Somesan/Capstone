@@ -64,8 +64,7 @@
 
 .eye__icon {  
     position: relative;
-    
     bottom: 15px;
-    color: black;
+    color: gray(248, 237, 237);
     cursor: pointer;
 }

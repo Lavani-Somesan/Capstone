@@ -19,8 +19,8 @@
 .product__card {
     padding: 16px;
     background-color: white;
-    width: 650px;
-    height: 650px;
+    width: 810px;
+    height: 810px;
     margin: 3rem;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     font-size: 15px;
@@ -32,8 +32,9 @@
 }
 
 .product__sectionContent {
-    margin-bottom: 0.5rem;
-    font-size: 18px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 20px;
 }
 
 .product__image {
