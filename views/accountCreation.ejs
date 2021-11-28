@@ -22,7 +22,7 @@
                     minlength="2" maxlength="50" required placeholder="Last Name"><br><br>
 
                 <label class="createAcnt__label__email" for="email">Email: </label>
-                <input class="createAcnt__input" type="text" id="email" name="email" 
+                <input class="createAcnt__input " type="text" id="email" name="email" 
                     maxlength="70" pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required placeholder="Email-Address"><br><br>
 
                 <label class="createAcnt__label" for="username">Username:</label>
@@ -30,8 +30,23 @@
                     minlength="2" maxlength="12" required placeholder="2 to 12 Characters Long"><br><br>
 
                 <label class="createAcnt__label" for="password">Password:</label>
-                <input class="createAcnt__input" type="password" id="password" name="password" 
-                    minlength="8" maxlength="30" required placeholder="8 to 30 Characters Long"><br><br>
+                <input class="createAcnt__input password" type="password" id="password" name="password" 
+                    minlength="8" maxlength="30" required placeholder="8 to 30 Characters Long">
+                    
+                    <i id="visibility" onclick="toggleFunction()"class="material-icons eye__icon">visibility</i>  
+                    <br><br>
+
+                    <script>
+                        function toggleFunction() {
+                            
+                          if(document.getElementById("password").type == "password") {
+                            document.getElementById("password").type = "text";
+                            
+                          } else {
+                            document.getElementById("password").type = "password";
+                          }
+                        }
+                        </script>
 
                 <button class="createAcnt__button" type="submit">Sign Up</button>
             </form>

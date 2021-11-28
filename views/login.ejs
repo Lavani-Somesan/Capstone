@@ -17,8 +17,23 @@
                 <input class="login__input" type="text" id="username" name="username" 
                     minlength="2" maxlength="12" placeholder="Username" required><br><br>
 
-                <input class="login__input" type="password" id="password" name="password" 
-                    minlength="8" maxlength="30"placeholder="Password" required><br><br>
+                <input class="login__input password" type="password" id="password" name="password" 
+                    minlength="8" maxlength="30"placeholder="Password" required>
+
+                    <i id="visibility" onclick="toggleFunction()"class="material-icons eye__icon">visibility</i>  
+                    <br><br>
+
+                    <script>
+                        function toggleFunction() {
+                            
+                          if(document.getElementById("password").type == "password") {
+                            document.getElementById("password").type = "text";
+                            
+                          } else {
+                            document.getElementById("password").type = "password";
+                          }
+                        }
+                        </script>
 
                 <button class="login__button" type="submit">Login</button>
             </form>

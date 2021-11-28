@@ -47,7 +47,12 @@
     border: 3px solid rgb(204, 201, 201);
     border-radius: 15px;
     margin-right: 8rem;
+    font-size: 16px;
     outline: none !important;
+}
+
+.createAcnt__input.password {
+    margin-left: 2rem;
 }
 
 .createAcnt__form {
@@ -83,5 +88,13 @@
     color: white;
     font-size: 16px;
     font-weight: bold;
+    cursor: pointer;
+}
+
+.eye__icon {  
+    position: relative;
+    right: 110px;
+    top: 8px;
+    color: black;
     cursor: pointer;
 }
