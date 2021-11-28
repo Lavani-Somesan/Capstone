@@ -29,6 +29,7 @@ dataBase.once("open", () => {
 //Routes
 app.post('/user/create-account/:requestID', userService.createUser);
 app.post('/user/authentication/:requestID', userService.authenticate);
+app.post('/user/account-settings/change-password/:token', userService.changePassword);
 app.get('/apiToken/:token', userService.update_ApiToken);
 app.get('/user/profile/apiToken/:token', userService.getProfile);
 

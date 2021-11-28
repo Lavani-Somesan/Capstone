@@ -103,6 +103,62 @@ exports.authenticate = async function(req, res) {
 };
 
 
+exports.changePassword = async function(req, res) {
+
+    let randomID = Math.floor((Math.random() * 100000) + 10000);
+
+    const user = await User.findOne({ apiToken: req.params.token});
+
+    if(user) {
+        const comparePswrd = await bcrypt.compare(req.body.current_password, user.password);
+
+        console.log(comparePswrd + "\n");
+
+        if(comparePswrd) {
+            
+            const newHashedPswrd = await bcrypt.hash(req.body.new_password, saltRounds);
+    
+            const passwordUpdate = await User.findOneAndUpdate({ apiToken: req.params.token },{password: newHashedPswrd});
+            
+            if(passwordUpdate) {
+                console.log("Successfully Changed Password\n");
+                let payload = {
+                    responseID: randomID,
+                    report: "Successfully Changed Password"
+                };
+                res.json(payload);
+            } 
+            else {
+                console.log("Error, Unable To Change Password Currently\n");
+                let payload = {
+                    responseID: randomID,
+                    report: "Error, Unable To Change Password Currently"
+                };
+                return res.json(payload);
+            }     
+        } else {
+        console.log("Error, Your Current Password Was Entered Incorrectly, Please Try Again\n");
+            let payload = {
+                responseID: randomID,
+                report: "Error, Your Current Password Was Entered Incorrectly, Please Try Again"
+            };
+            return res.json(payload);
+         }
+        
+    }
+    
+    else {
+    console.log("Error, Unable To Change Password Currently\n");
+    let payload = {
+        responseID: randomID,
+        report: "Error, Unable To Change Password Currently"
+    };
+    return res.json(payload);
+}
+    
+};
+
+
 exports.update_ApiToken = function(req, res) {
 
     User.findOneAndUpdate({ apiToken: req.params.token },{apiToken: randToken.generate(16)})

@@ -214,4 +214,49 @@ exports.getAccountSettingsPage = (req, res) => {
     } else {
         res.render("accountSettings", {session : req.session.user_ApiToken});
     }
-}
+};
+
+
+exports.getChangePasswordPage = (req, res) => {
+
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn to Change Your Password ");
+        res.redirect("/login")
+    } else {
+        res.render("changePassword", {session : req.session.user_ApiToken});
+    }
+};
+
+
+
+exports.changePassword = (req, res) => {
+
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn to Change Your Password ");
+        res.redirect("/login")
+    } else {
+        let endPoint = API_URL + '/user' + req.path + `/${req.session.user_ApiToken}`;
+        
+        if(req.body.new_password == req.body.confirm_password) {
+
+            api.post(endPoint, req.body).then((response) => {
+
+                if(!response.data.report.includes("Error")) {
+                    req.flash("success", response.data.report);
+                    res.redirect("/user/logout");
+                } else {
+                    req.flash("error", response.data.report);
+                    res.redirect("/user/account-settings/change-password");
+                }
+
+            })
+            .catch((error) => {
+                req.flash("error", "Error, Unable to Change Password Currently");
+                res.redirect("/user/account-settings");
+              }); 
+        } else {
+                req.flash("error", "Your New Password Does Not Match Re-Entered Password");
+                res.redirect("/user/account-settings/change-password");
+        }        
+    }
+};
