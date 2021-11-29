@@ -21,3 +21,11 @@ footer {
     left: 20px;
     border: none;
 }
+
+a:visited{
+    color:blue;
+  }
+
+a:link {
+    text-decoration-line: none;
+}

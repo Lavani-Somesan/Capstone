@@ -14,7 +14,7 @@
         <h1 class="cart__pageTitle">Shopping Cart</h1>
 
         <% if (data.length > 0 ) { %>
-            <div  style="color:white" class="cart__pageDivider">SubTotal</div>
+            <div  style="color:white" class="cart__pageDivider">Total</div>
 
             <div class="cart__cardContainer">
                 <% for (let i = 0; i < data.length; i++) { %>
@@ -51,12 +51,12 @@
                     </div>
 
                     <br><br>
-                    <a href="/purchase/stock"><button>Purchase</button></a>
+                    <button class="purchase__button"><a href="/purchase/stock"></a>Purchase</button>
             </div>
             <% } %>
 
                 <% if(data.length < 1) { %>
-                    <div class="cart__errorMessage">Your shopping cart is empty</div>
+                    <div class="cart__errorMessage">Your Shopping Cart Is Empty</div>
                     <% } %>
     </div>
 </body>

@@ -116,7 +116,11 @@ exports.update_ApiToken = (req, res) => {
 
 exports.getProfilePage =(req, res) => {
 
-    let endPoint = API_URL + `/user/profile/apiToken/${req.session.user_ApiToken}`;
+    if(!req.session.user_ApiToken) {
+        req.flash('error', "Please LogIn To View Profile");
+        res.redirect('/login');
+    } else {
+        let endPoint = API_URL + `/user/profile/apiToken/${req.session.user_ApiToken}`;
     
     console.log("Posting to API\n");
     
@@ -129,8 +133,6 @@ exports.getProfilePage =(req, res) => {
         } else {
             console.log(`Error, Response ID:  ${resp.data.responseID}`);
         }
-
-        console.log(resp.data.user);
         
         if(userObj == 0)
         {
@@ -144,6 +146,8 @@ exports.getProfilePage =(req, res) => {
     .catch(error => {
         console.log(`Request Failed: ${error.message}`);
     });
+
+    }
 }
 
 
@@ -183,8 +187,7 @@ exports.addToCart = (req, res) => {
           .catch((error) => {
             req.flash("error", "Error Product Cannot Be Added to Cart");
             res.redirect("/cart");
-          });
-          
+          });     
     }
 };
 
@@ -198,4 +201,234 @@ exports.removeFromCart = (req, res) => {
         }
     }
     res.redirect("/user/cart");
+};
+
+
+exports.getAccountSettingsPage = (req, res) => {
+
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn to View Your Account Settings ");
+        res.redirect("/login")
+    } else {
+        res.render("accountSettings", {session : req.session.user_ApiToken});
+    }
+};
+
+
+exports.getChangePasswordPage = (req, res) => {
+
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn to Change Your Password ");
+        res.redirect("/login")
+    } else {
+        res.render("changePassword", {session : req.session.user_ApiToken});
+    }
+};
+
+
+exports.changePassword = (req, res) => {
+
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn to Change Your Password ");
+        res.redirect("/login")
+    } else {
+        let endPoint = API_URL + '/user' + req.path + `/${req.session.user_ApiToken}`;
+        
+        if(req.body.new_password == req.body.confirm_password) {
+
+            api.post(endPoint, req.body).then((response) => {
+
+                if(!response.data.report.includes("Error")) {
+                    req.flash("success", response.data.report);
+                    res.redirect("/user/profile");
+                } else {
+                    req.flash("error", response.data.report);
+                    res.redirect("/user/account-settings/change-password");
+                }
+
+            })
+            .catch((error) => {
+                req.flash("error", "Error, Unable to Change Password Currently");
+                res.redirect("/user/account-settings");
+              }); 
+        } else {
+                req.flash("error", "Your New Password Does Not Match Re-Entered Password");
+                res.redirect("/user/account-settings/change-password");
+        }        
+    }
+};
+
+
+exports.getUpdateProfilePage = (req, res) => {
+
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn to Update Your Profile");
+        res.redirect("/login")
+    } else {
+        res.render("updateProfile", {session : req.session.user_ApiToken});
+    }
+};
+
+
+exports.getUpdateEmailPage = (req, res) => {
+
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn to Update Your Email on Your Account");
+        res.redirect("/login")
+    } else {
+        res.render("updateEmail", {session : req.session.user_ApiToken});
+    }
+};
+
+
+exports.updateEmail = (req, res) => {
+
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn to Update Your Email ");
+        res.redirect("/login")
+    } else {
+        
+        if(req.body.new_email == req.body.confirm_email) {
+
+            if(req.body.new_email != req.body.current_email) {
+
+                let endPoint = API_URL + '/user' + req.path + `/${req.session.user_ApiToken}`;
+
+                api.post(endPoint, req.body).then((response) => {
+
+                    if(!response.data.report.includes("Error")) {
+                        req.flash("success", response.data.report);
+                        res.redirect("/user/profile");
+                    } else {
+                        req.flash("error", response.data.report);
+                        res.redirect("/user/account-settings/update-profile/email");
+                    }
+    
+                })
+                .catch((error) => {
+                    req.flash("error", "Error, Unable to Update Email Currently");
+                    res.redirect("/user/account-settings");
+                  }); 
+            } 
+            else {
+                req.flash("error", "Your New Email is the Same as the Current Email");
+                res.redirect("/user/account-settings/update-profile/email");
+            }
+        } 
+        else {
+                req.flash("error", "Your New Email Does Not Match Re-Entered Email");
+                res.redirect("/user/account-settings/update-profile/email");
+        }        
+    }
+};
+
+
+
+exports.getUpdateNamePage = (req, res) => {
+
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn to Update Your Name on Your Account");
+        res.redirect("/login")
+    } else {
+        res.render("updateName", {session : req.session.user_ApiToken});
+    }
+};
+
+
+exports.updateName = (req, res) => {
+
+    let endPoint = API_URL + '/user' + req.path + `/${req.session.user_ApiToken}`;
+
+    api.post(endPoint, req.body).then((response) => {
+
+        if(!response.data.report.includes("Error")) {
+            req.flash("success", response.data.report);
+            res.redirect("/user/profile");
+        } else {
+            req.flash("error", response.data.report);
+            res.redirect("/user/account-settings/update-profile/name");
+        }
+    })
+    .catch((error) => {
+        req.flash("error", "Error, Unable to Update Name Currently");
+        res.redirect("/user/account-settings");
+      }); 
+};
+
+
+exports.getUpdateBdayPage = (req, res) => {
+
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn to Update Your Birthday on Your Account");
+        res.redirect("/login")
+    } else {
+        res.render("updateBday", {session : req.session.user_ApiToken});
+    }
+};
+
+
+exports.updateBday = (req, res) => {
+
+    let endPoint = API_URL + '/user' + req.path + `/${req.session.user_ApiToken}`;
+
+    api.post(endPoint, req.body).then((response) => {
+
+        if(!response.data.report.includes("Error")) {
+            req.flash("success", response.data.report);
+            res.redirect("/user/profile");
+        } else {
+            req.flash("error", response.data.report);
+            res.redirect("/user/account-settings/update-profile/birthday");
+        }
+    })
+    .catch((error) => {
+        req.flash("error", "Error, Unable to Update Name Currently");
+        res.redirect("/user/account-settings");
+      }); 
+
+};
+
+exports.getDeleteAcntPage = (req, res) => {
+
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn if You Wish to Delete Your Account");
+        res.redirect("/login")
+    } else {
+        res.render("deleteAcntPage", {session : req.session.user_ApiToken});
+    }
+}
+
+
+exports.deleteAccount = (req, res) => {
+
+    if(req.body.options == "yes") {
+
+        if(req.body.option_check) {
+
+            let endPoint = API_URL + '/user' + req.path + `/${req.session.user_ApiToken}`;
+
+            api.post(endPoint).then((response) => {
+
+                if(!response.data.report.includes("Error")) {
+                    req.flash("success", response.data.report);
+                    res.redirect("/user/logout");
+                } else {
+                    req.flash("error", response.data.report);
+                    res.redirect("/user/account-settings/delete-account");
+                }
+            })
+            .catch((error) => {
+                req.flash("error", "Error, Unable to Delete Account");
+                res.redirect("/user/account-settings");
+              }); 
+              
+        } else {
+            req.flash('error', "Please also Check the Checkbox if you wish to Permanently Delete Your Account");
+            res.redirect("/user/account-settings/delete-account");
+        }
+
+    } else {
+        req.flash('error', "You have Selected No to Delete Your Account");
+        res.redirect("/user/profile");
+    }
 };

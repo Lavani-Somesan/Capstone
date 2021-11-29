@@ -24,6 +24,7 @@ exports.createUser = async function(req, res, next) {
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
+        birthday: req.body.birthday,
         username: req.body.username,
         password: await bcrypt.hash(req.body.password, saltRounds)
     })
@@ -103,6 +104,156 @@ exports.authenticate = async function(req, res) {
 };
 
 
+exports.changePassword = async function(req, res) {
+
+    let randomID = Math.floor((Math.random() * 100000) + 10000);
+
+    const user = await User.findOne({ apiToken: req.params.token});
+
+    if(user) {
+        const comparePswrd = await bcrypt.compare(req.body.current_password, user.password);
+
+        console.log(comparePswrd + "\n");
+
+        if(comparePswrd) {
+            
+            const newHashedPswrd = await bcrypt.hash(req.body.new_password, saltRounds);
+    
+            const passwordUpdate = await User.findOneAndUpdate({ apiToken: req.params.token },{password: newHashedPswrd});
+            
+            if(passwordUpdate) {
+                console.log("Successfully Changed Password\n");
+                let payload = {
+                    responseID: randomID,
+                    report: "Successfully Changed Password"
+                };
+                res.json(payload);
+            } 
+            else {
+                console.log("Error, Unable To Change Password Currently\n");
+                let payload = {
+                    responseID: randomID,
+                    report: "Error, Unable To Change Password Currently"
+                };
+                return res.json(payload);
+            }     
+        } else {
+        console.log("Error, Your Current Password Was Entered Incorrectly, Please Try Again\n");
+            let payload = {
+                responseID: randomID,
+                report: "Error, Your Current Password Was Entered Incorrectly, Please Try Again"
+            };
+            return res.json(payload);
+         }
+        
+    }
+    
+    else {
+    console.log("Error, Unable To Change Password Currently\n");
+    let payload = {
+        responseID: randomID,
+        report: "Error, Unable To Change Password Currently"
+    };
+    return res.json(payload);
+}
+    
+};
+
+
+exports.updateEmail = async function(req, res) {
+
+    let randomID = Math.floor((Math.random() * 100000) + 10000);
+
+
+    const match_email = await User.findOne({email: req.body.new_email});
+
+    if(match_email) {
+        console.log("Error, Email is Already Taken\n");
+        let payload = {
+            responseID: randomID,
+            report: "Error Email is Already Taken"
+        };
+        res.json(payload);
+    } 
+
+    else {
+        const emailUpdate = await User.findOneAndUpdate({apiToken: req.params.token, email: req.body.current_email}, {email: req.body.new_email});
+
+        emailUpdate.save();
+
+        if(emailUpdate) {
+            console.log("Successfully Updated Email\n");
+            let payload = {
+                responseID: randomID,
+                report: "Successfully Updated Email"
+            };
+            res.json(payload);
+        } 
+        else {
+            console.log("Error in Updating Email, Please Try Again\n");
+            let payload = {
+                responseID: randomID,
+                report: "Error in Updating Email, Please Try Again"
+            };
+            res.json(payload);
+        }
+    }
+};
+
+
+exports.updateName = async function(req, res) {
+    let randomID = Math.floor((Math.random() * 100000) + 10000);
+
+    const user_name = await User.findOneAndUpdate({apiToken: req.params.token}, {firstname: req.body.firstname, lastname: req.body.lastname});
+
+    user_name.save();
+
+    if(user_name) {
+        console.log("Successfully Updated First & Last Name\n");
+        let payload = {
+            responseID: randomID,
+            report: "Successfully Updated First & Last Name"
+        };
+        res.json(payload);
+    }
+    else {
+        console.log("Error, Unable to Update First & Last Name\n");
+        let payload = {
+            responseID: randomID,
+            report: "Error, Unable to Update First & Last Name"
+        };
+        res.json(payload);
+    }
+};
+
+
+exports.updateBday = async function(req, res) {
+    let randomID = Math.floor((Math.random() * 100000) + 10000);
+
+    const user_bday = await User.findOneAndUpdate({apiToken: req.params.token}, {birthday: req.body.birthday});
+
+    user_bday.save();
+
+    if(user_bday) {
+        console.log("Successfully Updated Birthday\n");
+        let payload = {
+            responseID: randomID,
+            report: "Successfully Updated Birthday"
+        };
+        res.json(payload);
+    }
+    else {
+        console.log("Error, Unable to Update Birthday\n");
+        let payload = {
+            responseID: randomID,
+            report: "Error, Unable to Update Birthday"
+        };
+        res.json(payload);
+    }
+};
+
+
+
 exports.update_ApiToken = function(req, res) {
 
     User.findOneAndUpdate({ apiToken: req.params.token },{apiToken: randToken.generate(16)})
@@ -124,7 +275,7 @@ exports.update_ApiToken = function(req, res) {
             console.log("Unsuccessful in Changing Token\n");
             let payload = {
                 responseID: randomID,
-                report: "Error, Unsuccessful in Getting Profile Info"
+                report: "Error, Unsuccessful in Changing Token"
             }
             return res.json(payload);
         }
@@ -174,4 +325,39 @@ exports.getProfile = function(req,res)
             }
             res.json(payload);
     });
+};
+
+
+exports.deleteAccount = async function(req, res) {
+
+    let randomID = Math.floor((Math.random() * 100000) + 10000);
+
+    const user = await User.findOne({apiToken: req.params.token});
+
+    if(user) {
+        const user_deleted = await User.findOneAndDelete({_id: user._id});
+
+        if(user_deleted + "hih\n") {
+            console.log(`Success, User has been Deleted`);
+            let payload = {
+                report: "Success, Account Deleted"
+            }
+            res.json(payload);
+        }
+        else {
+            console.log(`Error, Unable To Delete User`);
+            let payload = {
+                report: "Error, Unable to Delete Account"
+            }
+            res.json(payload);
+        }
+    }
+    else {
+        console.log(`Error, Unable To Delete User`);
+            let payload = {
+                report: "Error, Unable to Delete Account"
+            }
+            res.json(payload);
+    }
+
 };
