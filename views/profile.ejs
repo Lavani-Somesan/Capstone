@@ -29,6 +29,9 @@
 
         <label class="profile__label" for="firstName">Name:</label>
         <p class="profile__data name"> <%- data.firstname %> <%- data.lastname %></p><br><br>
+
+        <label class="profile__label" for="birthday">Birthday:</label>
+        <p class="profile__data birthday"> <%- data.birthday.split("-").reverse().join("/") %></p><br><br>
        
 
         <label class="profile__label" for="email">Email:</label>

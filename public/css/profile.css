@@ -30,7 +30,8 @@
 
 .profile__form {
     width: 700px;
-    height: 330px;
+    height: 400px;
+    margin-bottom: 2rem;
     border-radius: 5px;
     padding: 16px;
     display: inline-block;
@@ -43,7 +44,7 @@
     clear: left;
     font-size: 22px;
     font-family: '', monospace;
-    margin-bottom: 5rem;
+    margin-bottom: 4rem;
     padding-left: 30px;
     padding-top: 10px;
     color: white;
@@ -54,7 +55,7 @@
     font-size: 22px;
     font-family: '', monospace;
     padding-top: 10px;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     padding-right: 75px;
     color: white;
 }
@@ -64,5 +65,9 @@
 }
 
 .profile__data.name {
-    padding-right: 120px;
+    padding-right: 140px;
+}
+
+.profile__data.birthday {
+    padding-right: 160px;
 }

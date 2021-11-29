@@ -66,3 +66,7 @@
     font-size: 3vh;
     cursor: pointer;
 }
+
+a:visited {
+    color: white;
+}

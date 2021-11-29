@@ -24,6 +24,7 @@ exports.createUser = async function(req, res, next) {
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
+        birthday: req.body.birthday,
         username: req.body.username,
         password: await bcrypt.hash(req.body.password, saltRounds)
     })
@@ -180,7 +181,7 @@ exports.update_ApiToken = function(req, res) {
             console.log("Unsuccessful in Changing Token\n");
             let payload = {
                 responseID: randomID,
-                report: "Error, Unsuccessful in Getting Profile Info"
+                report: "Error, Unsuccessful in Changing Token"
             }
             return res.json(payload);
         }

@@ -25,6 +25,9 @@
                 <input class="createAcnt__input " type="text" autocomplete="off" id="email" name="email" 
                     maxlength="70" pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required placeholder="Email-Address"><br><br>
 
+                    <label class="createAcnt__label" for="birthday">Birthday: </label>
+                    <input class="createAcnt__input birthday" type="date" id="birthday" name="birthday"required style="font-size: 16px"><br><br>
+
                 <label class="createAcnt__label" for="username">Username:</label>
                 <input class="createAcnt__input" type="text" autocomplete="off" id="username" name="username" 
                     minlength="2" maxlength="12" required placeholder="2 to 12 Characters Long"><br><br>
@@ -32,6 +35,7 @@
                 <label class="createAcnt__label" for="password">Password:</label>
                 <input class="createAcnt__input password" type="password" id="password" name="password" 
                     minlength="8" maxlength="30" required placeholder="8 to 30 Characters Long">
+                    
                     
                     <i id="eye__icon" onclick="toggleFunction()"class="material-icons eye__icon">visibility</i>  
                     <br><br>
@@ -51,6 +55,15 @@
                         </script>
 
                 <button class="createAcnt__button" type="submit">Sign Up</button>
+
+                <br>
+                
+                <p style="text-indent: 1rem; font-size: 16px;">  Already Have An Account?</p> <br>
+
+                <a href="/login" style="text-decoration: none"> 
+                <button class="login__button" type="submit">LogIn</button> </a>
+
+
             </form>
             
         </div>

@@ -133,8 +133,6 @@ exports.getProfilePage =(req, res) => {
         } else {
             console.log(`Error, Response ID:  ${resp.data.responseID}`);
         }
-
-        console.log(resp.data.user);
         
         if(userObj == 0)
         {
@@ -243,7 +241,7 @@ exports.changePassword = (req, res) => {
 
                 if(!response.data.report.includes("Error")) {
                     req.flash("success", response.data.report);
-                    res.redirect("/user/logout");
+                    res.redirect("/user/profile");
                 } else {
                     req.flash("error", response.data.report);
                     res.redirect("/user/account-settings/change-password");
