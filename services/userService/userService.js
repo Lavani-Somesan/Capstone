@@ -98,7 +98,7 @@ exports.authenticate = async function(req, res) {
                 responseID: randomID,
                 report: "Error, Unsuccessful in Logging in"
             }
-            console.log(`Error doing authentication: ${error.message}\n`);
+            console.log(`Error doing authentication:\n`);
             return res.json(payload);
     }
 };
