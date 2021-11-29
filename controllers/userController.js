@@ -335,6 +335,27 @@ exports.getUpdateNamePage = (req, res) => {
 };
 
 
+exports.updateName = (req, res) => {
+
+    let endPoint = API_URL + '/user' + req.path + `/${req.session.user_ApiToken}`;
+
+    api.post(endPoint, req.body).then((response) => {
+
+        if(!response.data.report.includes("Error")) {
+            req.flash("success", response.data.report);
+            res.redirect("/user/profile");
+        } else {
+            req.flash("error", response.data.report);
+            res.redirect("/user/account-settings/update-profile/name");
+        }
+    })
+    .catch((error) => {
+        req.flash("error", "Error, Unable to Update Name Currently");
+        res.redirect("/user/account-settings");
+      }); 
+};
+
+
 exports.getUpdateBdayPage = (req, res) => {
 
     if(!req.session.user_ApiToken) {
@@ -343,4 +364,26 @@ exports.getUpdateBdayPage = (req, res) => {
     } else {
         res.render("updateBday", {session : req.session.user_ApiToken});
     }
+};
+
+
+exports.updateBday = (req, res) => {
+
+    let endPoint = API_URL + '/user' + req.path + `/${req.session.user_ApiToken}`;
+
+    api.post(endPoint, req.body).then((response) => {
+
+        if(!response.data.report.includes("Error")) {
+            req.flash("success", response.data.report);
+            res.redirect("/user/profile");
+        } else {
+            req.flash("error", response.data.report);
+            res.redirect("/user/account-settings/update-profile/birthday");
+        }
+    })
+    .catch((error) => {
+        req.flash("error", "Error, Unable to Update Name Currently");
+        res.redirect("/user/account-settings");
+      }); 
+
 };

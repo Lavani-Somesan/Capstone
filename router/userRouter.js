@@ -17,7 +17,9 @@ router.get("/account-settings/update-profile/", userController.getUpdateProfileP
 router.get("/account-settings/update-profile/email", userController.getUpdateEmailPage);
 router.post("/account-settings/update-profile/email", userController.updateEmail);
 router.get("/account-settings/update-profile/name", userController.getUpdateNamePage);
+router.post("/account-settings/update-profile/name", userController.updateName);
 router.get("/account-settings/update-profile/birthday", userController.getUpdateBdayPage);
+router.post("/account-settings/update-profile/birthday", userController.updateBday);
 
 
 

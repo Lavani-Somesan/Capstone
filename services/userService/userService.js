@@ -201,6 +201,58 @@ exports.updateEmail = async function(req, res) {
 };
 
 
+exports.updateName = async function(req, res) {
+    let randomID = Math.floor((Math.random() * 100000) + 10000);
+
+    const user_name = await User.findOneAndUpdate({apiToken: req.params.token}, {firstname: req.body.firstname, lastname: req.body.lastname});
+
+    user_name.save();
+
+    if(user_name) {
+        console.log("Successfully Updated First & Last Name\n");
+        let payload = {
+            responseID: randomID,
+            report: "Successfully Updated First & Last Name"
+        };
+        res.json(payload);
+    }
+    else {
+        console.log("Error, Unable to Update First & Last Name\n");
+        let payload = {
+            responseID: randomID,
+            report: "Error, Unable to Update First & Last Name"
+        };
+        res.json(payload);
+    }
+};
+
+
+exports.updateBday = async function(req, res) {
+    let randomID = Math.floor((Math.random() * 100000) + 10000);
+
+    const user_bday = await User.findOneAndUpdate({apiToken: req.params.token}, {birthday: req.body.birthday});
+
+    user_bday.save();
+
+    if(user_bday) {
+        console.log("Successfully Updated Birthday\n");
+        let payload = {
+            responseID: randomID,
+            report: "Successfully Updated Birthday"
+        };
+        res.json(payload);
+    }
+    else {
+        console.log("Error, Unable to Update Birthday\n");
+        let payload = {
+            responseID: randomID,
+            report: "Error, Unable to Update Birthday"
+        };
+        res.json(payload);
+    }
+};
+
+
 
 exports.update_ApiToken = function(req, res) {
 
