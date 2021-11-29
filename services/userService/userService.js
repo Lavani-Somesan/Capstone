@@ -160,6 +160,47 @@ exports.changePassword = async function(req, res) {
 };
 
 
+exports.updateEmail = async function(req, res) {
+
+    let randomID = Math.floor((Math.random() * 100000) + 10000);
+
+    const user_email = await User.findOne({apiToken: req.params.token});
+
+    
+    if(user_email.email == req.body.current_email) {
+        const emailUpdate = await User.findOneAndUpdate({apiToken: req.params.token}, {email: req.body.new_email});
+
+        emailUpdate.save();
+
+        if(emailUpdate) {
+            console.log("Successfully Updated Email\n");
+            let payload = {
+                responseID: randomID,
+                report: "Successfully Updated Email"
+            };
+            res.json(payload);
+        } 
+        else {
+            console.log("Error in Updating Email\n");
+            let payload = {
+                responseID: randomID,
+                report: "Error in Updating Email"
+            };
+            res.json(payload);
+        }
+    }
+    else {
+        console.log("Error, Current Email Does Not Match\n");
+            let payload = {
+                responseID: randomID,
+                report: "Error, Current Email Does Not Match"
+            };
+            res.json(payload);
+    }
+};
+
+
+
 exports.update_ApiToken = function(req, res) {
 
     User.findOneAndUpdate({ apiToken: req.params.token },{apiToken: randToken.generate(16)})

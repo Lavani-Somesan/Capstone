@@ -226,7 +226,6 @@ exports.getChangePasswordPage = (req, res) => {
 };
 
 
-
 exports.changePassword = (req, res) => {
 
     if(!req.session.user_ApiToken) {
@@ -256,5 +255,92 @@ exports.changePassword = (req, res) => {
                 req.flash("error", "Your New Password Does Not Match Re-Entered Password");
                 res.redirect("/user/account-settings/change-password");
         }        
+    }
+};
+
+
+exports.getUpdateProfilePage = (req, res) => {
+
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn to Update Your Profile");
+        res.redirect("/login")
+    } else {
+        res.render("updateProfile", {session : req.session.user_ApiToken});
+    }
+};
+
+
+exports.getUpdateEmailPage = (req, res) => {
+
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn to Update Your Email on Your Account");
+        res.redirect("/login")
+    } else {
+        res.render("updateEmail", {session : req.session.user_ApiToken});
+    }
+};
+
+
+exports.updateEmail = (req, res) => {
+
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn to Update Your Email ");
+        res.redirect("/login")
+    } else {
+        
+        if(req.body.new_email == req.body.confirm_email) {
+
+            if(req.body.new_email != req.body.current_email) {
+
+                let endPoint = API_URL + '/user' + req.path + `/${req.session.user_ApiToken}`;
+
+                api.post(endPoint, req.body).then((response) => {
+
+                    if(!response.data.report.includes("Error")) {
+                        req.flash("success", response.data.report);
+                        res.redirect("/user/profile");
+                    } else {
+                        req.flash("error", response.data.report);
+                        res.redirect("/user/account-settings/update-profile/email");
+                    }
+    
+                })
+                .catch((error) => {
+                    req.flash("error", "Error, Unable to Update Email Currently");
+                    res.redirect("/user/account-settings");
+                  }); 
+            } 
+            else {
+                req.flash("error", "Your New Email is the Same as the Current Email");
+                res.redirect("/user/account-settings/update-profile/email");
+            }
+        } 
+        else {
+                req.flash("error", "Your New Email Does Not Match Re-Entered Email");
+                res.redirect("/user/account-settings/update-profile/email");
+        }        
+    }
+};
+
+
+
+exports.getUpdateNamePage = (req, res) => {
+
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn to Update Your Name on Your Account");
+        res.redirect("/login")
+    } else {
+        res.render("updateName", {session : req.session.user_ApiToken});
+    }
+};
+
+
+exports.getUpdateBdayPage = (req, res) => {
+
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn to Update Your Birthday on Your Account");
+        res.redirect("/login")
+    } else {
+        res.render("updateBday", {session : req.session.user_ApiToken});
     }
 };
