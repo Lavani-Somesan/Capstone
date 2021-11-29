@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/deleteAcnt.css">
+    <title>Delete Account</title>
+</head>
+
+
+<html>
+
+   <body>
+        <div class="update__name">
+            <h1 class="update__header">Do You Wish to Delete Your Account</h1>
+    
+            <form class="update__form" action="/user/account-settings/delete-account" method="POST" onload="clearItForm.reset()">
+
+                <input class="radio__button up" type="radio" id="option_yes" name="options" value="yes">
+                <label class="options__label">Yes</label>
+                <input class="radio__button down" type="radio" id="option_no" name="options" value="no">
+                <label class="options__label">No</label><br>
+
+                <br>
+
+                <p class="text__label">By Checking this box, I undertand that I am </p>
+                <p class="text__label">Permanently Deleting My StationX Account.</p>
+                <input class="check__box" type="checkbox" id="option_check" name="option_check" value="checked">
+                <br><br>
+
+
+                <button class="submit__button" type="submit">Submit</button>
+            </form>
+
+        </div>
+    </body>
+</html>

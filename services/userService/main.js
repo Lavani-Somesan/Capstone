@@ -34,6 +34,8 @@ app.post('/user/account-settings/update-profile/email/:token', userService.updat
 app.post('/user/account-settings/update-profile/name/:token', userService.updateName);
 app.post('/user/account-settings/update-profile/birthday/:token', userService.updateBday);
 
+app.post('/user/account-settings/delete-account/:token', userService.deleteAccount);
+
 app.get('/apiToken/:token', userService.update_ApiToken);
 app.get('/user/profile/apiToken/:token', userService.getProfile);
 

@@ -387,3 +387,48 @@ exports.updateBday = (req, res) => {
       }); 
 
 };
+
+exports.getDeleteAcntPage = (req, res) => {
+
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn if You Wish to Delete Your Account");
+        res.redirect("/login")
+    } else {
+        res.render("deleteAcntPage", {session : req.session.user_ApiToken});
+    }
+}
+
+
+exports.deleteAccount = (req, res) => {
+
+    if(req.body.options == "yes") {
+
+        if(req.body.option_check) {
+
+            let endPoint = API_URL + '/user' + req.path + `/${req.session.user_ApiToken}`;
+
+            api.post(endPoint).then((response) => {
+
+                if(!response.data.report.includes("Error")) {
+                    req.flash("success", response.data.report);
+                    res.redirect("/user/logout");
+                } else {
+                    req.flash("error", response.data.report);
+                    res.redirect("/user/account-settings/delete-account");
+                }
+            })
+            .catch((error) => {
+                req.flash("error", "Error, Unable to Delete Account");
+                res.redirect("/user/account-settings");
+              }); 
+              
+        } else {
+            req.flash('error', "Please also Check the Checkbox if you wish to Permanently Delete Your Account");
+            res.redirect("/user/account-settings/delete-account");
+        }
+
+    } else {
+        req.flash('error', "You have Selected No to Delete Your Account");
+        res.redirect("/user/profile");
+    }
+};

@@ -326,3 +326,38 @@ exports.getProfile = function(req,res)
             res.json(payload);
     });
 };
+
+
+exports.deleteAccount = async function(req, res) {
+
+    let randomID = Math.floor((Math.random() * 100000) + 10000);
+
+    const user = await User.findOne({apiToken: req.params.token});
+
+    if(user) {
+        const user_deleted = await User.findOneAndDelete({_id: user._id});
+
+        if(user_deleted + "hih\n") {
+            console.log(`Success, User has been Deleted`);
+            let payload = {
+                report: "Success, Account Deleted"
+            }
+            res.json(payload);
+        }
+        else {
+            console.log(`Error, Unable To Delete User`);
+            let payload = {
+                report: "Error, Unable to Delete Account"
+            }
+            res.json(payload);
+        }
+    }
+    else {
+        console.log(`Error, Unable To Delete User`);
+            let payload = {
+                report: "Error, Unable to Delete Account"
+            }
+            res.json(payload);
+    }
+
+};

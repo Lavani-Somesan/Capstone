@@ -79,7 +79,7 @@ let mongoose = require('mongoose'),
     exports.getSearhResults = function(req, res) {
         
         Inventory.find({ $or:[{"brand": { $regex: `${req.params.searchParam}`, $options: "i"}}, {"title": { $regex: `${req.params.searchParam}`, $options: "i"}},
-         {"description": { $regex: `${req.params.searchParam}`, $options: "i"}} ]}, function(err, resultsForTitle) {
+             ]}, function(err, resultsForTitle) {
 
             let randomID = Math.floor((Math.random() * 100000) + 10000);
             

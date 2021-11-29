@@ -21,6 +21,9 @@ router.post("/account-settings/update-profile/name", userController.updateName);
 router.get("/account-settings/update-profile/birthday", userController.getUpdateBdayPage);
 router.post("/account-settings/update-profile/birthday", userController.updateBday);
 
+router.get("/account-settings/delete-account", userController.getDeleteAcntPage);
+router.post("/account-settings/delete-account", userController.deleteAccount);
+
 
 
 router.get("/cart", userController.getCartPage);
