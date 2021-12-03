@@ -24,8 +24,9 @@ exports.getNewsFeedPage = (req, res) => {
     })
     .catch((error) => {
       console.log("Error in retreiving newsFeed\n");
+      let resp = [];
       req.flash("error", "Sorry, Unable to Retreive NewsFeed Currently");
-      res.render('newsFeed', {session : req.session.user_ApiToken, data: 0 });
+      res.render('newsFeed', {session : req.session.user_ApiToken, data: resp });
     });
 
 

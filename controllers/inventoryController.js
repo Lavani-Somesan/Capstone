@@ -23,7 +23,8 @@ exports.getHomePage = (req, res) => {
   })
   .catch((error) => {
     console.log("Error in retreiving Favorite inventory\n");
-    res.render('home', {session : req.session.user_ApiToken, data: 0 });
+    let resp = [];
+    res.render('home', {session : req.session.user_ApiToken, data: resp });
   });
 }
 
@@ -49,8 +50,9 @@ exports.getGamePage = (req, res) => {
     })
     .catch((error) => {
       console.log("Error in retreiving game inventory\n");
+      let resp = [];
       req.flash("error", "Failed to Retreive Game Inventory");
-      res.render('games', {session : req.session.user_ApiToken, data: 0 });
+      res.render('games', {session : req.session.user_ApiToken, data: resp });
     });
 };
 
@@ -75,8 +77,9 @@ exports.getMerchPage = (req, res) => {
   })
   .catch((error) => {
     console.log("Error in retreiving Merch inventory\n");
+    let resp = [];
     req.flash("error", "Failed to Retreive Merch Inventory");
-    res.render('merchandise', {session : req.session.user_ApiToken, data: 0 });
+    res.render('merchandise', {session : req.session.user_ApiToken, data: resp });
   });
 };
 

@@ -145,6 +145,7 @@ exports.getProfilePage =(req, res) => {
     })
     .catch(error => {
         console.log(`Request Failed: ${error.message}`);
+        res.redirect("/home");
     });
 
     }
