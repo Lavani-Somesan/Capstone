@@ -23,9 +23,11 @@
     "rand-token": "^1.0.1",
     "text-encoder": "0.0.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "^10.1.0"
+  },
   "scripts": {
-    "test": "npm start",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "api": "(cd ./api && node main.js)",
     "user-service": "(cd ./services/userService && node main.js)",
