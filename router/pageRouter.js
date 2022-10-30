@@ -11,7 +11,6 @@ router.get("/login", pageController.getLoginPage);
 router.get("/create-account", pageController.getAccountCreationPage);
 router.get("/account-guide", pageController.getAccountGuidePage);
 router.get("/about", pageController.getAboutPage);
-router.get("/account-guide", pageController.getAccountGuidePage);
 
 router.get("/merchandise", inventoryController.getMerchPage);
 
