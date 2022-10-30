@@ -31,19 +31,3 @@ exports.getAccountGuidePage = (req, res) => {
 exports.getAboutPage = (req, res) => {
     res.render("about", {session : req.session.user_ApiToken});
 }
-
-exports.getMerchandisePage = (req, res) => {
-    
-    res.render("merchandise", {session : req.session.user_ApiToken});
-}
-
-exports.getGamesPage = (req, res) => {
-    
-    res.render("games", {session : req.session.user_ApiToken});
-}
-
-exports.getNewsFeedPage = (req, res) => {
-    
-    res.render("newsfeed", {session : req.session.user_ApiToken});
-
-}
