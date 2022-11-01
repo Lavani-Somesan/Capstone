@@ -28,6 +28,7 @@ dataBase.once("open", () => {
 
 
 //Routes
+app.get('/', inventoryService.getFavoriteInv);
 app.get('/home', inventoryService.getFavoriteInv);
 app.get('/games/', inventoryService.getGames);
 app.get('/merchandise/', inventoryService.getMerch);
