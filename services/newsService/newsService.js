@@ -7,9 +7,16 @@ exports.getNewsFeed = function(req, res) {
     
     NewsFeed.find({}, function(err, news) {
 
-        let randomID = Math.floor((Math.random() * 100000) + 10000);
+        if(news) {
+            console.log("Get News", "Response", "Success, Retrieved  all News");
+        } else {
 
-        console.log("inventory", req.path, "response", "Success, retrieved  all games", randomID);
+            if(err) {
+                console.log("Get News", "Response", "Error, " + error.message);
+            } else {
+                console.log("Get News", "Response", "Error, News Cannot Be Found");
+            }
+        }
         
         res.json(news);
     });

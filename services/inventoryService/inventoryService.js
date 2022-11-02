@@ -7,13 +7,16 @@ let mongoose = require('mongoose'),
     exports.getFavoriteInv = function(req, res) {
         
         Inventory.find({favorite : 'Yes'}, function(err, favInv) {
-            let randomID = Math.floor((Math.random() * 100000) + 10000);
 
-            if(favInv == 0) {
-                console.log("Favorite Inv", req.path, "response", "Error, Favorite Inventory Cannot be Retreived", randomID + "\n\n");
+            if(favInv) {
+                console.log("Get Favorite Inv", "response", "Success, Favorite Inventory Retreived\n");
 
             } else {
-                console.log("Favorite Inv", req.path, "response", "Success, Favorite Inventory Retreived", randomID + "\n\n");
+                if(err) {
+                    console.log("Get Favorite Inv", "response", "Error, " + err.message);
+                } else {
+                    console.log("Get Favorite Inv", "response", "Error, No Favorite Inventory Found\n");
+                }
             }
             
             res.json(favInv);
@@ -24,9 +27,17 @@ let mongoose = require('mongoose'),
     exports.getGames = function(req, res) {
 
         Inventory.find({category : 'games'}, function(err, games) {
-            let randomID = Math.floor((Math.random() * 100000) + 10000);
-            console.log("inventory", req.path, "response", "Success, retrieved  all games", randomID);
             
+            if(games) {
+                console.log("Get Games", "response", "Success, Retrieved  all Games");
+
+            } else {
+                if(err) {
+                    console.log("Get Games", "response", "Error, " + err.message);
+                } else {
+                    console.log("Get Games", "response", "Error, No Games Found\n");
+                }
+            }
             res.json(games);
         });
     };
@@ -34,8 +45,13 @@ let mongoose = require('mongoose'),
     exports.getMerch = function(req, res) {
 
         Inventory.find({category : 'merchandise'}, function(err, merch) {
-            let randomID = Math.floor((Math.random() * 100000) + 10000);
-            console.log("inventory", req.path, "response", "Success, retrieved  all merch", randomID);
+            
+            if(merch) {
+                console.log("Get Merch", "response", "Success, Retrieved  all Merch");
+
+            } else {
+                console.log("Get Merch", "response", "Error, No Merch Found\n\n");
+            }
             
             res.json(merch);
         });
@@ -45,13 +61,16 @@ let mongoose = require('mongoose'),
     exports.getProduct = function(req, res) {
         
         Inventory.findOne({title : req.params.title}, function(err, product) {
-            let randomID = Math.floor((Math.random() * 100000) + 10000);
 
-            if(product == 0) {
-                console.log("Product", req.path, "response", "Error, Product Cannot be Retreived", randomID + "\n\n");
+            if(product) {
+                console.log("Get Product", "response", "Success, Product Retreived\n");
 
             } else {
-                console.log("Product", req.path, "response", "Success, Product Retreived", randomID + "\n\n");
+                if(err) {
+                    console.log("Get Product", "response", "Error, " + err.message);
+                } else {
+                    console.log("Get Product", "response", "Error, Product Cannot be Retreived\n");
+                }
             }
             
             res.json(product);
@@ -62,13 +81,16 @@ let mongoose = require('mongoose'),
     exports.addToCart = function(req, res) {
         
         Inventory.findOne({_id : req.params.id}, function(err, product) {
-            let randomID = Math.floor((Math.random() * 100000) + 10000);
 
-            if(product == 0) {
-                console.log("Product", req.path, "response", "Error, Product Cannot be Found", randomID + "\n\n");
+            if(product) {
+                console.log("Add Product to Cart", "response", "Success, Product Found\n");
 
             } else {
-                console.log("Product", req.path, "response", "Success, Product Found", randomID + "\n\n");
+                if(err) {
+                    console.log("Add Product to Cart", "response", "Error, " + err.message);
+                } else {
+                    console.log("Add Product to Cart", "response", "Error, Product Cannot be Found\n");
+                }
             }
             
             res.json(product);
@@ -80,14 +102,16 @@ let mongoose = require('mongoose'),
         
         Inventory.find({ $or:[{"brand": { $regex: `${req.params.searchParam}`, $options: "i"}}, {"title": { $regex: `${req.params.searchParam}`, $options: "i"}},
              ]}, function(err, resultsForTitle) {
-
-            let randomID = Math.floor((Math.random() * 100000) + 10000);
             
             if(resultsForTitle < 1) {
-                console.log("search results", req.path, "response", "Error, Searched for matching results, none found", randomID + "\n\n");
+                if(err) {
+                    console.log("Search Results", "response", "Error, " + err.message);
+                } else {
+                    console.log("Search Results", "response", "Error, Searched for matching results, none found\n");
+                }
 
             } else {
-                console.log("search results", req.path, "response", "Success, Searched for matching results, found", randomID) + "\n\n";
+                console.log("Search Results", "response", "Success, Searched for matching results, found\n");
             }
         
             res.json(resultsForTitle);

@@ -1,12 +1,13 @@
 const apiAdapter = require('../api/apiAdapter');
 const API_URL = process.env.API_ENDPOINT ||'http://localhost:2000';
 const api = apiAdapter(API_URL);
+const { v4: uuidv4 } = require('uuid');
 
 
 exports.createUser = (req, res) => {
-    
-    let randID = Math.floor((Math.random() * 10000) + 10000);
-    let endPoint = API_URL + '/user' + req.path + `/${randID}`;
+
+    req.body.requestID = uuidv4();
+    let endPoint = API_URL + '/user' + req.path;
     
     console.log("Posting to API");
     
@@ -27,17 +28,17 @@ exports.createUser = (req, res) => {
         }
     })
     .catch(error => {
-        console.log(`Request Failed: ${error.message}`);
+        console.log("Error, Unable to Create an Account\n" + error.message);
         res.redirect("/create-account");
     });
-
     
 };
 
 
 exports.authentication = (req, res) => {
-    let randID = Math.floor((Math.random() * 100000) + 10000);
-    let endPoint = API_URL + `/user/authentication/${randID}`;
+    req.body.requestID = uuidv4();
+    let endPoint = API_URL + `/user/authentication/`;
+
     var isAuthenticated = 0;
 
     console.log("\n Posting login data to API");
@@ -63,8 +64,8 @@ exports.authentication = (req, res) => {
             res.redirect("/login"); 
         }   
     })
-    .catch(err => {
-        console.log("Error Logging in\n");
+    .catch(error => {
+        console.log("Error, Unable to LogIn\n" + error.message);
         req.flash("error", "Failed to Log In");
         res.redirect("/login");
     })
@@ -108,7 +109,7 @@ exports.update_ApiToken = (req, res) => {
         }
     })
     .catch(error => {
-        console.log(`Request Failed: ${error.message}`);
+        console.log("Error, Unable to Update API Token\n" + error.message);
     });
 
 
@@ -122,32 +123,31 @@ exports.getProfilePage =(req, res) => {
     } else {
         let endPoint = API_URL + `/user/profile/apiToken/${req.session.user_ApiToken}`;
     
-    console.log("Posting to API\n");
-    
-    api.get(endPoint).then(resp => {
-
-        const userObj = resp.data.user;
-
-        if(resp.data.responseID != null && !resp.data.report.includes("Error")) {
-            console.log(`Success, Response ID: ${resp.data.responseID}`);
-        } else {
-            console.log(`Error, Response ID:  ${resp.data.responseID}`);
-        }
+        console.log("Posting to API\n");
         
-        if(userObj == 0)
-        {
-            req.flash("error", resp.data.report);
-            res.redirect("/home");
-        }
-        else{
-            res.render("profile", {session : req.session.user_ApiToken, data : userObj});
-        }
-    })
-    .catch(error => {
-        console.log(`Request Failed: ${error.message}`);
-        res.redirect("/home");
-    });
+        api.get(endPoint).then(resp => {
 
+            const userObj = resp.data.user;
+
+            if(resp.data.responseID != null && !resp.data.report.includes("Error")) {
+                console.log(`Success, Response ID: ${resp.data.responseID}`);
+            } else {
+                console.log(`Error, Response ID:  ${resp.data.responseID}`);
+            }
+            
+            if(userObj == 0)
+            {
+                req.flash("error", resp.data.report);
+                res.redirect("/home");
+            }
+            else{
+                res.render("profile", {session : req.session.user_ApiToken, data : userObj});
+            }
+        })
+        .catch(error => {
+            console.log("Error, Unable to Get Profile Page\n" + error.message);
+            res.redirect("/home");
+        });
     }
 }
 
@@ -186,6 +186,7 @@ exports.addToCart = (req, res) => {
             }
           })
           .catch((error) => {
+            console.log("Error, Unable to Add Product to Cart\n" + error.message);
             req.flash("error", "Error Product Cannot Be Added to Cart");
             res.redirect("/cart");
           });     
@@ -234,6 +235,7 @@ exports.changePassword = (req, res) => {
         res.redirect("/login")
     } else {
         let endPoint = API_URL + '/user' + req.path + `/${req.session.user_ApiToken}`;
+        req.body.requestID = uuidv4();
         
         if(req.body.new_password == req.body.confirm_password) {
 
@@ -249,6 +251,7 @@ exports.changePassword = (req, res) => {
 
             })
             .catch((error) => {
+                console.log("Error, Unable to Change Password\n" + error.message);
                 req.flash("error", "Error, Unable to Change Password Currently");
                 res.redirect("/user/account-settings");
               }); 
@@ -288,12 +291,14 @@ exports.updateEmail = (req, res) => {
         req.flash("error", "Please LogIn to Update Your Email ");
         res.redirect("/login")
     } else {
-        
+        console.log(req.body.new_email);
+        console.log(req.body.current_email);
         if(req.body.new_email == req.body.confirm_email) {
 
             if(req.body.new_email != req.body.current_email) {
 
                 let endPoint = API_URL + '/user' + req.path + `/${req.session.user_ApiToken}`;
+                req.body.requestID = uuidv4();
 
                 api.post(endPoint, req.body).then((response) => {
 
@@ -307,6 +312,7 @@ exports.updateEmail = (req, res) => {
     
                 })
                 .catch((error) => {
+                    console.log("Error, Unable to Update Email\n" + error.message);
                     req.flash("error", "Error, Unable to Update Email Currently");
                     res.redirect("/user/account-settings");
                   }); 
@@ -339,6 +345,7 @@ exports.getUpdateNamePage = (req, res) => {
 exports.updateName = (req, res) => {
 
     let endPoint = API_URL + '/user' + req.path + `/${req.session.user_ApiToken}`;
+    req.body.requestID = uuidv4();
 
     api.post(endPoint, req.body).then((response) => {
 
@@ -351,6 +358,7 @@ exports.updateName = (req, res) => {
         }
     })
     .catch((error) => {
+        console.log("Error, Unable to Update Name\n" + error.message);
         req.flash("error", "Error, Unable to Update Name Currently");
         res.redirect("/user/account-settings");
       }); 
@@ -371,6 +379,7 @@ exports.getUpdateBdayPage = (req, res) => {
 exports.updateBday = (req, res) => {
 
     let endPoint = API_URL + '/user' + req.path + `/${req.session.user_ApiToken}`;
+    req.body.requestID = uuidv4();
 
     api.post(endPoint, req.body).then((response) => {
 
@@ -383,6 +392,7 @@ exports.updateBday = (req, res) => {
         }
     })
     .catch((error) => {
+        console.log("Error, Unable to Update Birthday\n" + error.message);
         req.flash("error", "Error, Unable to Update Name Currently");
         res.redirect("/user/account-settings");
       }); 
@@ -407,8 +417,9 @@ exports.deleteAccount = (req, res) => {
         if(req.body.option_check) {
 
             let endPoint = API_URL + '/user' + req.path + `/${req.session.user_ApiToken}`;
+            req.body.requestID = uuidv4();
 
-            api.post(endPoint).then((response) => {
+            api.post(endPoint, req.body).then((response) => {
 
                 if(!response.data.report.includes("Error")) {
                     req.flash("success", response.data.report);
@@ -419,6 +430,7 @@ exports.deleteAccount = (req, res) => {
                 }
             })
             .catch((error) => {
+                console.log("Error with Deleting Account\n" + error.message)
                 req.flash("error", "Error, Unable to Delete Account");
                 res.redirect("/user/account-settings");
               }); 
