@@ -7,7 +7,7 @@ const api = apiAdapter(BASE_URL)
 
 
 
-router.post('/user/create-account/:requestID', (req, res) => {
+router.post('/user/create-account/', (req, res) => {
     let endPoint = req.path;
 
     console.log("Passing through API Endpoint");
@@ -23,7 +23,7 @@ router.post('/user/create-account/:requestID', (req, res) => {
 });
 
 
-router.post('/user/authentication/:requestID', (req, res) => {
+router.post('/user/authentication/', (req, res) => {
     let endPoint = req.path;
 
     console.log("\nPassing through API Endpoint");
@@ -105,7 +105,7 @@ router.post('/user/account-settings/delete-account/:token', (req, res) => {
 
     console.log("Passing through API Endpoint");
 
-    api.post(endPoint).then(resp => {
+    api.post(endPoint, req.body).then(resp => {
             console.log("Passing back through API Endpoint");
             res.json(resp.data);
         })

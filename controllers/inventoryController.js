@@ -1,6 +1,7 @@
 const apiAdapter = require('../api/apiAdapter');
 const API_URL = process.env.API_ENDPOINT ||'http://localhost:2000';
 const api = apiAdapter(API_URL);
+const { v4: uuidv4 } = require('uuid');
 
 
 exports.getHomePage = (req, res) => {

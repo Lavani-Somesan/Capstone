@@ -31,8 +31,8 @@ dataBase.once("open", () => {
 
 
 //Routes
-app.post('/user/create-account/:requestID', userService.createUser);
-app.post('/user/authentication/:requestID', userService.authenticate);
+app.post('/user/create-account/', userService.createUser);
+app.post('/user/authentication/', userService.authenticate);
 app.post('/user/account-settings/change-password/:token', userService.changePassword);
 app.post('/user/account-settings/update-profile/email/:token', userService.updateEmail);
 app.post('/user/account-settings/update-profile/name/:token', userService.updateName);
