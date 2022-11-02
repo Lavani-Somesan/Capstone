@@ -291,7 +291,8 @@ exports.updateEmail = (req, res) => {
         req.flash("error", "Please LogIn to Update Your Email ");
         res.redirect("/login")
     } else {
-        
+        console.log(req.body.new_email);
+        console.log(req.body.current_email);
         if(req.body.new_email == req.body.confirm_email) {
 
             if(req.body.new_email != req.body.current_email) {

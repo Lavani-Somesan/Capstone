@@ -11,12 +11,9 @@ let mongoose = require('mongoose'),
 
 
 exports.createUser = async function(req, res, next) {
-    if(req != null){
-        console.log("Success in transmission to userService", "request id: ", req.body.id);
-        //console.log(req.body);
-    } else{
-        console.log("Error in transmission", "request id: ", req.body.id);
-    }
+    
+    console.log("Success in transmission to userService", "request id: ", req.body.requestID);
+    //console.log(req.body);
 
     let generateID = uuidv4();
 
@@ -49,9 +46,8 @@ exports.createUser = async function(req, res, next) {
             } else {
                 report_1 = "Error, Unsucessful Creation of User"
             }
-            user = 0;
                 let payload = {
-                    user: user,
+                    user: 0,
                     responseID: generateID,
                     report: report_1
                 }
@@ -62,11 +58,7 @@ exports.createUser = async function(req, res, next) {
 
 exports.authenticate = async function(req, res) {
 
-    if(req != null){
-        console.log("User Service", req.path, "request", "Success, request successful", req.body.id, "\n");
-    } else{
-        console.log("User Service", req.path, "request", "Error, request not found", req.body.id, "\n");  
-    }
+    console.log("Success in transmission to userService", "request id: ", req.body.requestID);
 
     let generateID = uuidv4();
 
@@ -106,6 +98,7 @@ exports.authenticate = async function(req, res) {
 
 exports.changePassword = async function(req, res) {
 
+    console.log("Success in transmission to userService", "request id: ", req.body.requestID);
     let generateID = uuidv4();
 
     const user = await User.findOne({ apiToken: req.params.token});
@@ -162,7 +155,19 @@ exports.changePassword = async function(req, res) {
 
 exports.updateEmail = async function(req, res) {
 
+    console.log("Success in transmission to userService", "request id: ", req.body.requestID);
+
     let generateID = uuidv4();
+    const curr_email = await User.findOne({email: req.body.current_email});
+
+    if(!curr_email) {
+        console.log("Error, Current Email Does Not Match\n");
+        let payload = {
+            responseID: generateID,
+            report: "Error Current Email Does Not Match"
+        };
+        res.json(payload);
+    }
 
     const match_email = await User.findOne({email: req.body.new_email});
 
@@ -201,6 +206,9 @@ exports.updateEmail = async function(req, res) {
 
 
 exports.updateName = async function(req, res) {
+
+    console.log("Success in transmission to userService", "request id: ", req.body.requestID);
+
     let generateID = uuidv4();
 
     const user_name = await User.findOneAndUpdate({apiToken: req.params.token}, {firstname: req.body.firstname, lastname: req.body.lastname});
@@ -227,6 +235,8 @@ exports.updateName = async function(req, res) {
 
 
 exports.updateBday = async function(req, res) {
+
+    console.log("Success in transmission to userService", "request id: ", req.body.requestID);
     let generateID = uuidv4();
 
     const user_bday = await User.findOneAndUpdate({apiToken: req.params.token}, {birthday: req.body.birthday});

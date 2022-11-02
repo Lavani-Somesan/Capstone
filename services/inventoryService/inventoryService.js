@@ -8,11 +8,15 @@ let mongoose = require('mongoose'),
         
         Inventory.find({favorite : 'Yes'}, function(err, favInv) {
 
-            if(favInv == 0) {
-                console.log("Favorite Inv", req.path, "response", "Error, Favorite Inventory Cannot be Retreived\n\n");
+            if(favInv) {
+                console.log("Get Favorite Inv", "response", "Success, Favorite Inventory Retreived\n");
 
             } else {
-                console.log("Favorite Inv", req.path, "response", "Success, Favorite Inventory Retreived\n\n");
+                if(err) {
+                    console.log("Get Favorite Inv", "response", "Error, " + err.message);
+                } else {
+                    console.log("Get Favorite Inv", "response", "Error, No Favorite Inventory Found\n");
+                }
             }
             
             res.json(favInv);
@@ -24,8 +28,16 @@ let mongoose = require('mongoose'),
 
         Inventory.find({category : 'games'}, function(err, games) {
             
-            console.log("inventory", req.path, "response", "Success, retrieved  all games");
-            
+            if(games) {
+                console.log("Get Games", "response", "Success, Retrieved  all Games");
+
+            } else {
+                if(err) {
+                    console.log("Get Games", "response", "Error, " + err.message);
+                } else {
+                    console.log("Get Games", "response", "Error, No Games Found\n");
+                }
+            }
             res.json(games);
         });
     };
@@ -34,7 +46,12 @@ let mongoose = require('mongoose'),
 
         Inventory.find({category : 'merchandise'}, function(err, merch) {
             
-            console.log("inventory", req.path, "response", "Success, retrieved  all merch");
+            if(merch) {
+                console.log("Get Merch", "response", "Success, Retrieved  all Merch");
+
+            } else {
+                console.log("Get Merch", "response", "Error, No Merch Found\n\n");
+            }
             
             res.json(merch);
         });
@@ -45,11 +62,15 @@ let mongoose = require('mongoose'),
         
         Inventory.findOne({title : req.params.title}, function(err, product) {
 
-            if(product == 0) {
-                console.log("Product", req.path, "response", "Error, Product Cannot be Retreived\n\n");
+            if(product) {
+                console.log("Get Product", "response", "Success, Product Retreived\n");
 
             } else {
-                console.log("Product", req.path, "response", "Success, Product Retreived\n\n");
+                if(err) {
+                    console.log("Get Product", "response", "Error, " + err.message);
+                } else {
+                    console.log("Get Product", "response", "Error, Product Cannot be Retreived\n");
+                }
             }
             
             res.json(product);
@@ -61,11 +82,15 @@ let mongoose = require('mongoose'),
         
         Inventory.findOne({_id : req.params.id}, function(err, product) {
 
-            if(product == 0) {
-                console.log("Product", req.path, "response", "Error, Product Cannot be Found\n\n");
+            if(product) {
+                console.log("Add Product to Cart", "response", "Success, Product Found\n");
 
             } else {
-                console.log("Product", req.path, "response", "Success, Product Found\n\n");
+                if(err) {
+                    console.log("Add Product to Cart", "response", "Error, " + err.message);
+                } else {
+                    console.log("Add Product to Cart", "response", "Error, Product Cannot be Found\n");
+                }
             }
             
             res.json(product);
@@ -79,10 +104,14 @@ let mongoose = require('mongoose'),
              ]}, function(err, resultsForTitle) {
             
             if(resultsForTitle < 1) {
-                console.log("search results", req.path, "response", "Error, Searched for matching results, none found\n\n");
+                if(err) {
+                    console.log("Search Results", "response", "Error, " + err.message);
+                } else {
+                    console.log("Search Results", "response", "Error, Searched for matching results, none found\n");
+                }
 
             } else {
-                console.log("search results", req.path, "response", "Success, Searched for matching results, found\n\n");
+                console.log("Search Results", "response", "Success, Searched for matching results, found\n");
             }
         
             res.json(resultsForTitle);
