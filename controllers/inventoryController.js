@@ -4,6 +4,7 @@ const api = apiAdapter(API_URL);
 const { v4: uuidv4 } = require('uuid');
 
 
+
 exports.getHomePage = (req, res) => {
   let endPoint = API_URL + req.path;
   
@@ -23,7 +24,7 @@ exports.getHomePage = (req, res) => {
     
   })
   .catch((error) => {
-    console.log("Error in retreiving Favorite inventory\n");
+    console.log("Error in Retreiving Favorite Inventory\n" + error.message);
     let resp = [];
     res.render('home', {session : req.session.user_ApiToken, data: resp });
   });
@@ -41,16 +42,16 @@ exports.getGamePage = (req, res) => {
       const gameObj = resp.data;
 
       if(gameObj) {
-          console.log('Success in retreiving game inventory\n');
+          console.log('Success in Retreiving Game Inventory\n');
           res.render('games', {session : req.session.user_ApiToken, data: resp.data });
       } else {
-            console.log('Error in retreiving game inventory\n');
+            console.log('Error in Retreiving Game Inventory\n');
             res.render('games', {session : req.session.user_ApiToken, data: resp.data });
       }
       
     })
     .catch((error) => {
-      console.log("Error in retreiving game inventory\n");
+      console.log("Error in Retreiving Game Inventory\n" + error.message);
       let resp = [];
       req.flash("error", "Failed to Retreive Game Inventory");
       res.render('games', {session : req.session.user_ApiToken, data: resp });
@@ -68,18 +69,18 @@ exports.getMerchPage = (req, res) => {
     const merchObj = resp.data;
 
     if(merchObj) {
-        console.log('Success in retreiving Merch inventory\n');
+        console.log('Success in Retreiving Merch Inventory\n');
         res.render('merchandise', {session : req.session.user_ApiToken, data: resp.data });
     } else {
-          console.log('Error in retreiving Merch inventory\n');
+          console.log('Error in Retreiving Merch Inventory\n');
           res.render('merchandise', {session : req.session.user_ApiToken, data: resp.data });
     }
     
   })
   .catch((error) => {
-    console.log("Error in retreiving Merch inventory\n");
+    console.log("Error in Retreiving Merch Inventory\n" + error.message);
     let resp = [];
-    req.flash("error", "Failed to Retreive Merch Inventory");
+    req.flash("error", "Unable to Retrieve Merch Inventory");
     res.render('merchandise', {session : req.session.user_ApiToken, data: resp });
   });
 };
@@ -93,10 +94,18 @@ exports.getProduct = (req, res) => {
   api.get(endPoint, req.query).then((response) => {
     const product = response.data;
 
-    res.render('product', {session : req.session.user_ApiToken, data: product });
+    if(product) {
+      console.log('Success in Product from Inventory\n');
+      res.render('product', {session : req.session.user_ApiToken, data: product });
+  } else {
+        console.log('Error in Retreiving Product from Inventory\n');
+        req.flash("error", "Error with Viewing Product");
+        res.redirect('/home');
+  }
 
   })
   .catch((error) => {
+    console.log('Error in Retreiving Product from Inventory\n' + error.message);
     req.flash("error", "Error with Viewing Product");
     res.redirect("/home");
   });
@@ -117,7 +126,8 @@ exports.searchInventory = (req, res) => {
 
     })
     .catch((error) => {
-      req.flash("error", "Error with Search Functionality");
+      console.log("Error with Searching Functionality\n" + error.message);
+      req.flash("error", "Unable to Search, Please Try Again");
       res.redirect("/home");
     });
 

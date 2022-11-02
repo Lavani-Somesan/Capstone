@@ -17,7 +17,7 @@ router.post('/user/create-account/', (req, res) => {
             res.json(resp.data);
         })
         .catch(error => {
-            console.log(`Request Failed: ${error.message}\n`);
+            console.log(`API, Request Failed: ${error.message}\n`);
             res.send(null);
         });
 });
@@ -33,7 +33,7 @@ router.post('/user/authentication/', (req, res) => {
             res.json(resp.data);
         })
         .catch(error => {
-            console.log(`Request Failed: ${error.message}\n`);
+            console.log(`API, Request Failed: ${error.message}\n`);
             res.send(null);
         });
 });
@@ -49,7 +49,7 @@ router.post('/user/account-settings/change-password/:token', (req, res) => {
             res.json(resp.data);
         })
         .catch(error => {
-            console.log(`Request Failed: ${error.message}\n`);
+            console.log(`API, Request Failed: ${error.message}\n`);
             res.send(null);
         });
 });
@@ -64,7 +64,7 @@ router.post('/user/account-settings/update-profile/email/:token', (req, res) => 
             res.json(resp.data);
         })
         .catch(error => {
-            console.log(`Request Failed: ${error.message}\n`);
+            console.log(`API, Request Failed: ${error.message}\n`);
             res.send(null);
         });
 });
@@ -79,7 +79,7 @@ router.post('/user/account-settings/update-profile/name/:token', (req, res) => {
             res.json(resp.data);
         })
         .catch(error => {
-            console.log(`Request Failed: ${error.message}\n`);
+            console.log(`API, Request Failed: ${error.message}\n`);
             res.send(null);
         });
 });
@@ -95,7 +95,7 @@ router.post('/user/account-settings/update-profile/birthday/:token', (req, res) 
             res.json(resp.data);
         })
         .catch(error => {
-            console.log(`Request Failed: ${error.message}\n`);
+            console.log(`API, Request Failed: ${error.message}\n`);
             res.send(null);
         });
 });
@@ -110,7 +110,7 @@ router.post('/user/account-settings/delete-account/:token', (req, res) => {
             res.json(resp.data);
         })
         .catch(error => {
-            console.log(`Request Failed: ${error.message}\n`);
+            console.log(`API, Request Failed: ${error.message}\n`);
             res.send(null);
         });
 });
@@ -126,7 +126,7 @@ router.get('/apiToken/:token', (req, res, next) => {
         res.json(resp.data);
     })
     .catch(error => {
-        console.log(error.message);
+        console.log(`API, Request Failed: ${error.message}\n`);
         res.send(null);
     })
 });
@@ -141,7 +141,7 @@ router.get('/user/profile/apiToken/:token', (req, res) => {
         res.json(resp.data);
     })
     .catch(error => {
-        console.log(error.message);
+        console.log(`API, Request Failed: ${error.message}\n`);
         res.send(null);
     })
 });

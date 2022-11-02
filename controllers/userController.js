@@ -28,10 +28,9 @@ exports.createUser = (req, res) => {
         }
     })
     .catch(error => {
-        console.log(`Request Failed: ${error.message}`);
+        console.log("Error, Unable to Create an Account\n" + error.message);
         res.redirect("/create-account");
     });
-
     
 };
 
@@ -65,8 +64,8 @@ exports.authentication = (req, res) => {
             res.redirect("/login"); 
         }   
     })
-    .catch(err => {
-        console.log("Error Logging in\n");
+    .catch(error => {
+        console.log("Error, Unable to LogIn\n" + error.message);
         req.flash("error", "Failed to Log In");
         res.redirect("/login");
     })
@@ -110,7 +109,7 @@ exports.update_ApiToken = (req, res) => {
         }
     })
     .catch(error => {
-        console.log(`Request Failed: ${error.message}`);
+        console.log("Error, Unable to Update API Token\n" + error.message);
     });
 
 
@@ -146,7 +145,7 @@ exports.getProfilePage =(req, res) => {
             }
         })
         .catch(error => {
-            console.log(`Request Failed: ${error.message}`);
+            console.log("Error, Unable to Get Profile Page\n" + error.message);
             res.redirect("/home");
         });
     }
@@ -187,6 +186,7 @@ exports.addToCart = (req, res) => {
             }
           })
           .catch((error) => {
+            console.log("Error, Unable to Add Product to Cart\n" + error.message);
             req.flash("error", "Error Product Cannot Be Added to Cart");
             res.redirect("/cart");
           });     
@@ -251,6 +251,7 @@ exports.changePassword = (req, res) => {
 
             })
             .catch((error) => {
+                console.log("Error, Unable to Change Password\n" + error.message);
                 req.flash("error", "Error, Unable to Change Password Currently");
                 res.redirect("/user/account-settings");
               }); 
@@ -310,6 +311,7 @@ exports.updateEmail = (req, res) => {
     
                 })
                 .catch((error) => {
+                    console.log("Error, Unable to Update Email\n" + error.message);
                     req.flash("error", "Error, Unable to Update Email Currently");
                     res.redirect("/user/account-settings");
                   }); 
@@ -355,6 +357,7 @@ exports.updateName = (req, res) => {
         }
     })
     .catch((error) => {
+        console.log("Error, Unable to Update Name\n" + error.message);
         req.flash("error", "Error, Unable to Update Name Currently");
         res.redirect("/user/account-settings");
       }); 
@@ -388,6 +391,7 @@ exports.updateBday = (req, res) => {
         }
     })
     .catch((error) => {
+        console.log("Error, Unable to Update Birthday\n" + error.message);
         req.flash("error", "Error, Unable to Update Name Currently");
         res.redirect("/user/account-settings");
       }); 
@@ -425,6 +429,7 @@ exports.deleteAccount = (req, res) => {
                 }
             })
             .catch((error) => {
+                console.log("Error with Deleting Account\n" + error.message)
                 req.flash("error", "Error, Unable to Delete Account");
                 res.redirect("/user/account-settings");
               }); 

@@ -18,7 +18,7 @@ router.get('/newsFeed/', (req, res) => {
             res.send(resp.data)
         })
         .catch(error => {
-            console.log("Error in transmission\n");
+            console.log(`API, Request Failed: ${error.message}\n`);
             res.send(null);
         });
 });

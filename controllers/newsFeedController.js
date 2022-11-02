@@ -14,20 +14,19 @@ exports.getNewsFeedPage = (req, res) => {
       const feedObj = resp.data;
 
       if(feedObj) {
-          console.log('Success in retreiving newsFeed\n');
+          console.log('Success in Retreiving NewsFeed\n');
           res.render('newsFeed', {session : req.session.user_ApiToken, data: resp.data });
       } else {
-            console.log('Error in retreiving newsFeed\n');
+            console.log('Error in Retreiving NewsFeed\n');
             res.render('newsFeed', {session : req.session.user_ApiToken, data: resp.data });
       }
       
     })
     .catch((error) => {
-      console.log("Error in retreiving newsFeed\n");
+      console.log("Error in Retreiving NewsFeed\n" + error.message);
       let resp = [];
       req.flash("error", "Sorry, Unable to Retreive NewsFeed Currently");
       res.render('newsFeed', {session : req.session.user_ApiToken, data: resp });
     });
-
 
 };
