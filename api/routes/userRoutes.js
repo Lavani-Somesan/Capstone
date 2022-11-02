@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const apiAdapter = require('../apiAdapter');
-let BASE_URL = 'http://localhost:4000';
+let BASE_URL = process.env.USER_ENDPOINT || 'http://localhost:4000';
 const api = apiAdapter(BASE_URL)
 
 

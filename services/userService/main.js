@@ -1,4 +1,8 @@
-const port = 4000;
+const path = require('path');
+const env = require("dotenv").config({ path: '../../.env'});
+
+const port = process.env.USER_SERVICE_PORT || 4000;
+
 let bodyParser = require('body-parser');
 
 express = require("express"),
@@ -16,7 +20,7 @@ app.use(bodyParser.json());
 //Connecting to mongoose
 mongoose.Promise = global.Promise;
 mongoose.connect(
-    "mongodb+srv://stationXUser:stationX@cluster0.q4lpz.mongodb.net/StationX?retryWrites=true&w=majority", { useNewUrlParser: true,  useUnifiedTopology: true}
+    process.env.DB_CONNECT_KEY, { useNewUrlParser: true,  useUnifiedTopology: true}
 );
 const dataBase = mongoose.connection;
 

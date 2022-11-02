@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const apiAdapter = require('../apiAdapter');
-let BASE_URL = 'http://localhost:7000';
+let BASE_URL = process.env.NEWSFEED_ENDPOINT || 'http://localhost:7000';
 const api = apiAdapter(BASE_URL);
 
 

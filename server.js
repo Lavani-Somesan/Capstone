@@ -1,4 +1,6 @@
-const port = 8050;
+const env = require("dotenv").config();
+
+const port = process.env.SERVER_PORT || 8000;
 const path = require('path');
 const router = require("./router/main");
 
