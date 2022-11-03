@@ -1,3 +1,14 @@
+/*
+ * pageController.js
+ * Defines the Different Page Route Functionality 
+ */
+
+
+/*
+ * Function to get the login page
+ * If the user is in a session then they cannot go to this page and will be reidrected.
+ * Otherwise it will render the login page from the Views folder.
+ */
 exports.getLoginPage = (req, res) => {
 
     if (req.session.user_ApiToken) {
@@ -8,6 +19,11 @@ exports.getLoginPage = (req, res) => {
     }
 }
 
+/*
+ * Function to get the Create Account Page
+ * If the user is in a session then they cannot go to this page and will be reidrected.
+ * Otherwise it will render the account Creation page from the Views folder.
+ */
 exports.getAccountCreationPage = (req, res) => {
 
     if (req.session.user_ApiToken) {
@@ -18,6 +34,11 @@ exports.getAccountCreationPage = (req, res) => {
     }
 }
 
+/*
+ * Function to get the Account Guide Page
+ * If the user is in a session then they cannot go to this page and will be reidrected.
+ * Otherwise it will render the account guide page from the Views folder.
+ */
 exports.getAccountGuidePage = (req, res) => {
     
     if (req.session.user_ApiToken) {
@@ -28,6 +49,10 @@ exports.getAccountGuidePage = (req, res) => {
     }
 }
 
+/*
+ * Function to get the About page
+ * Renders the about page from the Views folder
+ */
 exports.getAboutPage = (req, res) => {
     res.render("about", {session : req.session.user_ApiToken});
 }

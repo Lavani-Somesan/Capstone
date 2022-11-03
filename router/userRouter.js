@@ -1,3 +1,10 @@
+/*
+ * Contains the Uesr Routes of the app
+ * Routes are linked to the userController which handles the
+ * functionality for those routes. 
+ * If a user route is not there or some other problem it will go 
+ * to the error router.
+ */
 const router = require("express").Router(),
 errorRouter = require("./errorRouter"),
 userController = require("../controllers/userController");

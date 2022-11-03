@@ -1,3 +1,8 @@
+/*
+ * API is the intermediary between the server and the services
+ * Defines the Modules and Middleware the API needs
+ * Launches the API
+ */
 const path = require('path');
 const env = require("dotenv").config({ path: '../.env'});
 
