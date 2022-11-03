@@ -1,5 +1,5 @@
 /*
- * Contains the Error Current Error routes for the app
+ * Contains the Current Error routes for the app
  * If the Route that the user requests is not found or if there is a internal server error
  * it routes to the errorController which handles the error functionality 
  */
