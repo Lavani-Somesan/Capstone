@@ -1,3 +1,9 @@
+/*
+ * Contains the Page Routes of the app
+ * Routes are linked to different controllers depending on the functionality 
+ * (if there is any) of the page
+ */
+
 const router = require("express").Router(),
 errorRouter = require("./errorRouter"),
 pageController = require("../controllers/pageController");

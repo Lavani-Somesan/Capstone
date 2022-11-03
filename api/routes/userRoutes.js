@@ -1,3 +1,10 @@
+/*
+ * API User Routes that get requests from the server and
+ * sends them to the User Service.
+ * Then, it sends the response that it gets from the User Service 
+ * back to the server.
+ */
+
 var express = require('express');
 var router = express.Router();
 
@@ -5,6 +12,13 @@ const apiAdapter = require('../apiAdapter');
 let BASE_URL = process.env.USER_ENDPOINT || 'http://localhost:4000';
 const api = apiAdapter(BASE_URL)
 
+/*
+ * All Routes in this file!
+ * Gets a request from the server with a matching URL
+ * Makes a get/post request to the User Service and awaits a response.
+ * Sends back a response to the server.
+ * If there was an error, it will print error and send back null to server.
+ */
 
 
 router.post('/user/create-account/', (req, res) => {

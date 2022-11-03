@@ -1,5 +1,12 @@
-const env = require("dotenv").config();
+/*
+ * Server.js 
+ * Starting point for the application to launch
+ * Defines what modules the application will require 
+ * Defines the middleware the applicaiton will use
+ * Links the different routing paths with the CSS
+ */
 
+const env = require("dotenv").config();
 const port = process.env.SERVER_PORT || 8000;
 const path = require('path');
 const router = require("./router/main");

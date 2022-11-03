@@ -1,9 +1,21 @@
+/*
+ * userController.js
+ * Defines the Different User Route Functionality 
+ */
+
 const apiAdapter = require('../api/apiAdapter');
 const API_URL = process.env.API_ENDPOINT ||'http://localhost:2000';
 const api = apiAdapter(API_URL);
 const { v4: uuidv4 } = require('uuid');
 
 
+/*
+ * Function to Create an Account
+ * Makes a post request to the API and awaits a response.
+ * If the userObj contains data then it will flash success and redirect to login
+ * Else it will flash an error as to why cannot create account and redirect back to
+ * the create account page
+ */
 exports.createUser = (req, res) => {
 
     req.body.requestID = uuidv4();
@@ -12,6 +24,7 @@ exports.createUser = (req, res) => {
     console.log("Posting to API");
     
     api.post(endPoint, req.body).then(resp => {
+        const userObj = resp.data.user;
         
         if(resp.data.responseID != null && !resp.data.report.includes("Error")) {
             console.log(`Success, Response ID: ${resp.data.responseID}`);
@@ -19,7 +32,7 @@ exports.createUser = (req, res) => {
             console.log(`Error, Response ID:  ${resp.data.responseID}`);
         }
 
-        if(!resp.data.report.includes("Error")) {
+        if(userObj) {
             req.flash("success", "Success in Creating Account!")
             res.redirect("/login");
         } else {
@@ -31,10 +44,16 @@ exports.createUser = (req, res) => {
         console.log("Error, Unable to Create an Account\n" + error.message);
         res.redirect("/create-account");
     });
-    
 };
 
 
+/*
+ * Function to Authenticate a User when Logging in
+ * Makes a post request to the API and awaits a response.
+ * If the userObj contains data it will start a session and then redirect logged-in user to home page.
+ * Else it will flash an error as to why they cannot login and redirect back to
+ * the login page
+ */
 exports.authentication = (req, res) => {
     req.body.requestID = uuidv4();
     let endPoint = API_URL + `/user/authentication/`;
@@ -46,11 +65,9 @@ exports.authentication = (req, res) => {
     api.post(endPoint, req.body).then(resp => {
         const userObj = resp.data.user
             
-        if(resp.data.responseID != null && resp.data.report != null){
-            console.log("User Service", req.path, "response", resp.data.report, resp.data.responseID); 
-        } 
-
-        if (Object.keys(userObj).length > 0) {
+        console.log("User Service", req.path, "response", resp.data.report, resp.data.responseID); 
+        
+        if (userObj) {
             req.session.user_ApiToken = userObj.apiToken; //Starts session
             req.session.user_ID = userObj._id; 
             req.session.cartTotal = 0;
@@ -72,6 +89,13 @@ exports.authentication = (req, res) => {
 };
 
 
+/*
+ * Function to LogOut a User from their Account
+ * If the user is not logged in (in a session) they will not be able to logout
+ * Otherwise, the user's API token is updated before the session is destroyed.
+ * If session is destroyed successfully the cookie will be cleared and user will be redirected to login.
+ * If there is an error, the user will be reidrected to home and given an error message.
+ */
 exports.logout = (req, res) => {
     if (!req.session.user_ApiToken) {
         req.flash("error", "Not Logged In");
@@ -94,6 +118,12 @@ exports.logout = (req, res) => {
     }
 };
 
+
+/*
+ * Function to Update a User's API Token
+ * Makes a get request to the API and awaits a response
+ * Prints either a success or error message depending on if token was updated.
+ */
 exports.update_ApiToken = (req, res) => {
 
     let endPoint = API_URL + `/apiToken/${req.session.user_ApiToken}`;
@@ -115,6 +145,14 @@ exports.update_ApiToken = (req, res) => {
 
 };
 
+
+/*
+ * Function to Get the User's Profile Page
+ * If the user is not logged in (in a session) they will be redirected to login to view profile page.
+ * Otherwise, makes a get request to the API and awaits a response
+ * If the userObj contains data it will render the profile page with the data
+ * Else it will flash an error as to why they cannot view the profile page and redirect to home page
+ */
 exports.getProfilePage =(req, res) => {
 
     if(!req.session.user_ApiToken) {
@@ -135,13 +173,12 @@ exports.getProfilePage =(req, res) => {
                 console.log(`Error, Response ID:  ${resp.data.responseID}`);
             }
             
-            if(userObj == 0)
-            {
+            if(userObj) {
+                res.render("profile", {session : req.session.user_ApiToken, data : userObj});
+            }
+            else {
                 req.flash("error", resp.data.report);
                 res.redirect("/home");
-            }
-            else{
-                res.render("profile", {session : req.session.user_ApiToken, data : userObj});
             }
         })
         .catch(error => {
@@ -152,6 +189,11 @@ exports.getProfilePage =(req, res) => {
 }
 
 
+/*
+ * Function to Get the User's Cart Page
+ * If the user is not logged in (in a session) they will be redirected to login to view the cart page.
+ * Otherwise, the cart page is rendered with the current items that have been added to the session cart.
+ */
 exports.getCartPage = (req, res) => {
 
     if(!req.session.user_ApiToken) {
@@ -163,6 +205,14 @@ exports.getCartPage = (req, res) => {
 };
 
 
+/*
+ * Function to Add to the User's Cart
+ * If the user is not logged in (in a session) they will be redirected to login to add to cart.
+ * Otherwise, makes a get request to the API and awaits a response
+ * If the productObj contains data it will add the product to the session cart
+ * and update the session cart total.
+ * Else it will flash an error as to why they cannot add product to cart and redirect to home page
+ */
 exports.addToCart = (req, res) => {
 
     if(!req.session.user_ApiToken) {
@@ -174,9 +224,10 @@ exports.addToCart = (req, res) => {
         console.log(endPoint);
         
         api.get(endPoint).then((response) => {
+            const productObj = response.data;
 
-            if(response.data.product != 0) {
-                req.session.cart.push(response.data);
+            if(productObj) {
+                req.session.cart.push(productObj);
                 req.session.cartTotal  += response.data.price;
 
                 res.redirect("/user/cart");
@@ -193,6 +244,13 @@ exports.addToCart = (req, res) => {
     }
 };
 
+
+/*
+ * Function to Remove Item From User's Cart
+ * Loops through the session cart and finds the matching product id
+ * that the user wants to remove and splices it from the cart.
+ * Redirects back to the cart page with the updated data.
+ */
 exports.removeFromCart = (req, res) => {
 
     for(var i = 0; i < req.session.cart.length; i++) {
@@ -206,6 +264,11 @@ exports.removeFromCart = (req, res) => {
 };
 
 
+/*
+ * Function to Get User's Account Settings Page
+ * If the user is not logged in (in a session) they will be redirected to login to view account settings page.
+ * Otherwise, the Account Settings page will render
+ */
 exports.getAccountSettingsPage = (req, res) => {
 
     if(!req.session.user_ApiToken) {
@@ -217,6 +280,11 @@ exports.getAccountSettingsPage = (req, res) => {
 };
 
 
+/*
+ * Function to Get the User's Change Password Page
+ * If the user is not logged in (in a session) they will be redirected to login to view change password page.
+ * Otherwise, renders Change Password page
+ */
 exports.getChangePasswordPage = (req, res) => {
 
     if(!req.session.user_ApiToken) {
@@ -228,6 +296,15 @@ exports.getChangePasswordPage = (req, res) => {
 };
 
 
+/*
+ * Function to Change a User's Password
+ * If the user is not logged in (in a session) they will be redirected to login to change their password.
+ * If the new password does not equal re-entered new password then user is redirected back to change password page. 
+ * Otherwise, makes a post request to the API and awaits a response.
+ * If the response report does not contain "Error" then the password was updated successfully
+ * and redirect to profile page.
+ * Else it will flash an error as to why they cannot change password and redirect back to change password page
+ */
 exports.changePassword = (req, res) => {
 
     if(!req.session.user_ApiToken) {
@@ -263,6 +340,11 @@ exports.changePassword = (req, res) => {
 };
 
 
+/*
+ * Function to Get the User's Update Profile Page
+ * If the user is not logged in (in a session) they will be redirected to login to view update profile page.
+ * Otherwise, renders Update Profile Page
+ */
 exports.getUpdateProfilePage = (req, res) => {
 
     if(!req.session.user_ApiToken) {
@@ -274,6 +356,11 @@ exports.getUpdateProfilePage = (req, res) => {
 };
 
 
+/*
+ * Function to Get the Update User's Email Page
+ * If the user is not logged in (in a session) they will be redirected to login to view the update email page.
+ * Otherwise, renders the Update Email page
+ */
 exports.getUpdateEmailPage = (req, res) => {
 
     if(!req.session.user_ApiToken) {
@@ -285,14 +372,23 @@ exports.getUpdateEmailPage = (req, res) => {
 };
 
 
+/*
+ * Function to Update a User's Email
+ * If the user is not logged in (in a session) they will be redirected to login to update their email
+ * If the new email does not equal re-entered new email or if current email equals new email
+ * then user is redirected back to update email page.
+ * Otherwise, makes a post request to the API and awaits a response.
+ * If the response report does not contain "Error" then the email was updated successfully
+ * and redirect to profile page.
+ * Else it will flash an error as to why they cannot update the email and redirect back to update email page
+ */
 exports.updateEmail = (req, res) => {
 
     if(!req.session.user_ApiToken) {
         req.flash("error", "Please LogIn to Update Your Email ");
         res.redirect("/login")
     } else {
-        console.log(req.body.new_email);
-        console.log(req.body.current_email);
+
         if(req.body.new_email == req.body.confirm_email) {
 
             if(req.body.new_email != req.body.current_email) {
@@ -330,7 +426,11 @@ exports.updateEmail = (req, res) => {
 };
 
 
-
+/*
+ * Function to Get the Update User's Name Page
+ * If the user is not logged in (in a session) they will be redirected to login to view the update name page.
+ * Otherwise, renders the Update Name page
+ */
 exports.getUpdateNamePage = (req, res) => {
 
     if(!req.session.user_ApiToken) {
@@ -342,12 +442,24 @@ exports.getUpdateNamePage = (req, res) => {
 };
 
 
+/*
+ * Function to Update a User's Name
+ * If the user is not logged in (in a session) they will be redirected to login to update their name
+ * Makes a post request to the API and awaits a response.
+ * If the response report does not contain "Error" then the name was updated successfully
+ * and redirect to profile page.
+ * Else it will flash an error as to why they cannot update the name and redirect back to update name page
+ */
 exports.updateName = (req, res) => {
 
-    let endPoint = API_URL + '/user' + req.path + `/${req.session.user_ApiToken}`;
-    req.body.requestID = uuidv4();
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn to Update Your Name ");
+        res.redirect("/login")
+    } else {
+        let endPoint = API_URL + '/user' + req.path + `/${req.session.user_ApiToken}`;
+        req.body.requestID = uuidv4();
 
-    api.post(endPoint, req.body).then((response) => {
+        api.post(endPoint, req.body).then((response) => {
 
         if(!response.data.report.includes("Error")) {
             req.flash("success", response.data.report);
@@ -362,9 +474,15 @@ exports.updateName = (req, res) => {
         req.flash("error", "Error, Unable to Update Name Currently");
         res.redirect("/user/account-settings");
       }); 
+    }
 };
 
 
+/*
+ * Function to Get the Update User's Birthday Page
+ * If the user is not logged in (in a session) they will be redirected to login to view the update birthday page.
+ * Otherwise, renders the Update Birthday page
+ */
 exports.getUpdateBdayPage = (req, res) => {
 
     if(!req.session.user_ApiToken) {
@@ -376,12 +494,25 @@ exports.getUpdateBdayPage = (req, res) => {
 };
 
 
+
+/*
+ * Function to Update a User's Birthday
+ * If the user is not logged in (in a session) they will be redirected to login to update their birthday
+ * Makes a post request to the API and awaits a response.
+ * If the response report does not contain "Error" then the birthday was updated successfully
+ * and redirect to profile page.
+ * Else it will flash an error as to why they cannot update the name and redirect back to update birthday page
+ */
 exports.updateBday = (req, res) => {
 
-    let endPoint = API_URL + '/user' + req.path + `/${req.session.user_ApiToken}`;
-    req.body.requestID = uuidv4();
+    if(!req.session.user_ApiToken) {
+        req.flash("error", "Please LogIn to Update Your Birthday ");
+        res.redirect("/login")
+    } else {
+        let endPoint = API_URL + '/user' + req.path + `/${req.session.user_ApiToken}`;
+        req.body.requestID = uuidv4();
 
-    api.post(endPoint, req.body).then((response) => {
+        api.post(endPoint, req.body).then((response) => {
 
         if(!response.data.report.includes("Error")) {
             req.flash("success", response.data.report);
@@ -396,9 +527,16 @@ exports.updateBday = (req, res) => {
         req.flash("error", "Error, Unable to Update Name Currently");
         res.redirect("/user/account-settings");
       }); 
+    }
 
 };
 
+
+/*
+ * Function to Get the Delete User's Account Page
+ * If the user is not logged in (in a session) they will be redirected to login to view the delete account page.
+ * Otherwise, renders the Delete Account page
+ */
 exports.getDeleteAcntPage = (req, res) => {
 
     if(!req.session.user_ApiToken) {
@@ -410,6 +548,14 @@ exports.getDeleteAcntPage = (req, res) => {
 }
 
 
+/*
+ * Function to Delete a User's Account
+ * If both the checkbox and radio button have been selected as yes to delete account
+ * Then, it makes a post request to the API and awaits a response.
+ * If the response report does not contain "Error" then the account was Deleted successfully
+ * and redirected to the logout function.
+ * Else it will flash an error as to why they cannot Delete the Account and redirect back to the Delete Account Page
+ */
 exports.deleteAccount = (req, res) => {
 
     if(req.body.options == "yes") {

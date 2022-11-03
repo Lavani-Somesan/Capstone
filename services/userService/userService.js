@@ -1,3 +1,8 @@
+/*
+ * Defines the Route Functionality of the
+ * User Service
+ */
+
 const e = require('express');
 const { json } = require('body-parser');
 const randToken = require('rand-token');
@@ -9,7 +14,14 @@ let mongoose = require('mongoose'),
     User = mongoose.model('Users');
 
 
-
+/*
+ * Function to Create a User in DB
+ * We can use the Mongoose .create to create the User 
+ * with the information the user submitted.
+ * The password is encrypted using bycrypt 
+ * If user is created successfully returns payload containing user data
+ * Otherwise, prints error message and returns payload that has no user data
+ */      
 exports.createUser = async function(req, res, next) {
     
     console.log("Success in transmission to userService", "request id: ", req.body.requestID);
@@ -56,6 +68,16 @@ exports.createUser = async function(req, res, next) {
 };
 
 
+/*
+ * Function to Authenticate the User
+ * First uses the Mongoose .findOne query to find a 
+ * matching username that user submitted.
+ * If match is found then the user's submitted password 
+ * is encrypted and then compared with the found user objects
+ * password. 
+ * If both match then return payload with user's data 
+ * else returns payload with no user's data and error message of why authentication failed.
+ */   
 exports.authenticate = async function(req, res) {
 
     console.log("Success in transmission to userService", "request id: ", req.body.requestID);
@@ -96,6 +118,13 @@ exports.authenticate = async function(req, res) {
 };
 
 
+/*
+ * Function to Change User's Password
+ * First ensure that api token matches stored one before changing any data.
+ * If user object exists, then compare user's entered current password with user object stored password.
+ * If match then encrypt new password and then update the User's password in DB using API token.
+ * Returns payload with responseID and report regardless of success or error
+ */ 
 exports.changePassword = async function(req, res) {
 
     console.log("Success in transmission to userService", "request id: ", req.body.requestID);
@@ -152,7 +181,14 @@ exports.changePassword = async function(req, res) {
     
 };
 
-
+/*
+ * Function to Change User's Email
+ * Finds a user with the user's current email in DB
+ * If curr_email object exists, then find in DB a user with the new email.
+ * If there is a user with the new email then returns an error.
+ * Else, uses API toke to find the user and update the user's email address in DB with new email.
+ * Returns payload with responseID and report regardless of success or error
+ */ 
 exports.updateEmail = async function(req, res) {
 
     console.log("Success in transmission to userService", "request id: ", req.body.requestID);
@@ -205,6 +241,13 @@ exports.updateEmail = async function(req, res) {
 };
 
 
+/*
+ * Function to Upate User's Name
+ * Uses the .findOneAndUpdate Mongoose query to find a user in the DB
+ * with a matching API token and update the first name and last name.
+ * Saves the updated user's info to DB
+ * Returns a payload with a responseID and report regardless of success or error
+ */ 
 exports.updateName = async function(req, res) {
 
     console.log("Success in transmission to userService", "request id: ", req.body.requestID);
@@ -234,6 +277,13 @@ exports.updateName = async function(req, res) {
 };
 
 
+/*
+ * Function to Upate User's Birthday
+ * Uses the .findOneAndUpdate Mongoose query to find a user in the DB
+ * with a matching API token and update the user's birthday
+ * Saves the updated user's info to DB
+ * Returns a payload with a responseID and report regardless of success or error
+ */ 
 exports.updateBday = async function(req, res) {
 
     console.log("Success in transmission to userService", "request id: ", req.body.requestID);
@@ -263,6 +313,13 @@ exports.updateBday = async function(req, res) {
 
 
 
+/*
+ * Function to Upate API Token
+ * Uses the .findOneAndUpdate Mongoose query to find a user in the DB
+ * with a matching API token and update generate a new random token.
+ * Saves the updated user's info to DB
+ * Returns a payload with a responseID and report regardless of success or error
+ */ 
 exports.update_ApiToken = function(req, res) {
 
     User.findOneAndUpdate({ apiToken: req.params.token },{apiToken: randToken.generate(16)})
@@ -300,6 +357,14 @@ exports.update_ApiToken = function(req, res) {
 
 };
 
+
+/*
+ * Function to User's Info for Profile Page
+ * Uses the .findOne Mongoose query to find a user in the DB
+ * with a matching API token and returns the payload with the
+ * user's data.
+ * If no user is found, then returns payload with no user data.
+ */ 
 exports.getProfile = function(req,res)
 {
     User.findOne({ apiToken: req.params.token })
@@ -337,6 +402,14 @@ exports.getProfile = function(req,res)
 };
 
 
+/*
+ * Function to Delete a User's Account
+ * Users the .find Mongoose query to find a user in the DB with a matching
+ * API token.
+ * If user exists, then do .findOneAndDelete query using the object id 
+ * of the user found to delete the user from the DB.
+ * Returns a payload with a responseID and report regardless of success or error
+ */ 
 exports.deleteAccount = async function(req, res) {
 
     let generateID = uuidv4();

@@ -1,3 +1,12 @@
+/*
+ * Defines all the modules required for the service
+ * as well as the middleware functions used.
+ * Sets up Mongoose to allow Inventory Service to 
+ * connect to MongoDB
+ * Declares Routes that are used by the Service
+ * Launches the Inventory Service
+ */
+
 const path = require('path');
 const env = require("dotenv").config({ path: '../../.env'});
 

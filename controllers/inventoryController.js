@@ -1,10 +1,20 @@
-const apiAdapter = require('../api/apiAdapter');
+/*
+ * inventoryController.js
+ * Defines the Different Inventory Route Functionality 
+ */
+
+ apiAdapter = require('../api/apiAdapter');
 const API_URL = process.env.API_ENDPOINT ||'http://localhost:2000';
 const api = apiAdapter(API_URL);
 const { v4: uuidv4 } = require('uuid');
 
 
-
+/*
+ * Function to get the Home Page 
+ * Makes a get request to the API with the created endpoint URL. 
+ * Awaits the response from the API and creates an object from the response data.
+ * Renders home page regarless if there is data
+ */
 exports.getHomePage = (req, res) => {
   let endPoint = API_URL + req.path;
   
@@ -15,13 +25,11 @@ exports.getHomePage = (req, res) => {
     const productObj = resp.data;
 
     if(productObj) {
-        console.log('Success in retreiving Favorite inventory\n');
-        res.render('home', {session : req.session.user_ApiToken, data: resp.data });
+        console.log('Success in Retrieving Favorite inventory\n');
     } else {
-          console.log('Error in retreiving Favorite inventory\n');
-          res.render('home', {session : req.session.user_ApiToken, data: resp.data });
+          console.log('Error in Retrieving Favorite inventory\n');
     }
-    
+    res.render('home', {session : req.session.user_ApiToken, data: resp.data });
   })
   .catch((error) => {
     console.log("Error in Retreiving Favorite Inventory\n" + error.message);
@@ -31,7 +39,12 @@ exports.getHomePage = (req, res) => {
 }
 
 
-
+/*
+ * Function to get the Games Page 
+ * Makes a get request to the API with the created endpoint URL. 
+ * Awaits the response from the API and creates an object from the response data.
+ * Renders Game page regarless if there is data 
+ */
 exports.getGamePage = (req, res) => {
     let endPoint = API_URL + req.path;
     
@@ -43,12 +56,11 @@ exports.getGamePage = (req, res) => {
 
       if(gameObj) {
           console.log('Success in Retreiving Game Inventory\n');
-          res.render('games', {session : req.session.user_ApiToken, data: resp.data });
       } else {
             console.log('Error in Retreiving Game Inventory\n');
-            res.render('games', {session : req.session.user_ApiToken, data: resp.data });
       }
-      
+      res.render('games', {session : req.session.user_ApiToken, data: resp.data });
+
     })
     .catch((error) => {
       console.log("Error in Retreiving Game Inventory\n" + error.message);
@@ -59,6 +71,12 @@ exports.getGamePage = (req, res) => {
 };
 
 
+/*
+ * Function to get the Merch Page 
+ * Makes a get request to the API with the created endpoint URL. 
+ * Awaits the response from the API and creates an object from the response data.
+ * Renders Merch page regarless if there is data 
+ */
 exports.getMerchPage = (req, res) => {
   let endPoint = API_URL + req.path;
   
@@ -70,12 +88,10 @@ exports.getMerchPage = (req, res) => {
 
     if(merchObj) {
         console.log('Success in Retreiving Merch Inventory\n');
-        res.render('merchandise', {session : req.session.user_ApiToken, data: resp.data });
     } else {
           console.log('Error in Retreiving Merch Inventory\n');
-          res.render('merchandise', {session : req.session.user_ApiToken, data: resp.data });
     }
-    
+    res.render('merchandise', {session : req.session.user_ApiToken, data: resp.data });
   })
   .catch((error) => {
     console.log("Error in Retreiving Merch Inventory\n" + error.message);
@@ -86,6 +102,13 @@ exports.getMerchPage = (req, res) => {
 };
 
 
+/*
+ * Function to get the Product Page 
+ * Makes a get request to the API with the created endpoint URL. 
+ * Awaits the response from the API and creates an object from the response data.
+ * Renders Product page if product object contains data.
+ * Else Redirects user to home page and flashes an error message in viewing product
+ */
 exports.getProduct = (req, res) => {
   let endPoint = API_URL + req.path;
 
@@ -113,6 +136,13 @@ exports.getProduct = (req, res) => {
 };
 
 
+/*
+ * Function to get the Search Results 
+ * Makes a get request to the API with the created endpoint URL. 
+ * Awaits the response from the API and creates an object from the response data.
+ * Renders Search Results page with the data found and what the user entered in the search bar.
+ * (Even if there is no data still renders the page and lets user no that no match was found)
+ */
 exports.searchInventory = (req, res) => {
   //let searchParam = req.body.search.split(" ").join("-");
   let endPoint = API_URL + req.path + req.body.search;
